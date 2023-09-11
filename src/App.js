@@ -1,24 +1,24 @@
-import logo from './logo.svg';
 import './App.css';
+import { Routes, Route } from 'react-router-dom'
+import Unique from './Component/Unique';
+import Location from './Component/Location';
+import Dashbboard from './Component/Dashbboard';
+import { UserProvider } from './Provider';
+import Mycomponent from './Component/Mycomponent';
 
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <UserProvider >
+      <Routes>
+        <Route path='/' element={<Unique />} >
+          <Route index element={<Mycomponent />} />
+          <Route path='/location' element={<Location />} />
+          <Route path='/Dashbboard' element={<Dashbboard />} />
+        </Route>
+
+      </Routes>
+    </UserProvider>
   );
 }
 
