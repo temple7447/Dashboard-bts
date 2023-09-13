@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
 import { useInformation } from '../Provider'
 const containerStyle = {
@@ -7,13 +7,29 @@ const containerStyle = {
 
 };
 
+function getElevation(location) {
+  return new Promise((resolve, reject) => {
+    const elevator = new window.google.maps.ElevationService();
 
+    const locationRequest = {
+      locations: [location],
+    };
 
-function MyComponent() {
+    elevator.getElevationForLocations(locationRequest, (results, status) => {
+      if (status === 'OK' && results && results.length > 0) {
+        resolve(results[0].elevation);
+      } else {
+        reject(status);
+      }
+    });
+  });
+}
+
+function DashbboardHomemain() {
     const  { apiKey, setlatgeo , latgeo, setlonggeo, longgeo,isLoaded} = useInformation()
     const center = {
-        lat: latgeo || 6.549430399999999,
-        lng:  longgeo || 7.649430399999999
+        lat: latgeo || 6.4,
+        lng:  longgeo || 7.149430399999999
       };
 //   const { isLoaded } = useJsApiLoader({
 //     id: 'google-map-script',
@@ -23,6 +39,19 @@ function MyComponent() {
   const [map, setMap] = useState(null);
   const [locationName, setLocationName] = useState('');
   const [clickedLocation, setClickedLocation] = useState(null);
+  const [elevation, setElevation] = useState(null);
+
+    useEffect(() => {
+    if (isLoaded && map) {
+      getElevation(center)
+        .then((elevationData) => {
+          setElevation(elevationData);
+        })
+        .catch((error) => {
+          console.error('Error fetching elevation:', error);
+        });
+    }
+  }, [isLoaded, map, locationName]);
 
   const onLoad = React.useCallback(function callback(map) {
     const bounds = new window.google.maps.LatLngBounds(center);
@@ -67,20 +96,23 @@ function MyComponent() {
           value={locationName}
           onChange={(e) => setLocationName(e.target.value)}
         />
-        <button style={{backgroundColor:'blue', padding:10,borderRadius:5}} className='mx-3' onClick={handleGeocodeClick}>Geocode</button>
+        <button style={{backgroundColor:'blue', padding:10,borderRadius:5}} className='mx-3' onClick={handleGeocodeClick}>Get Coordinate</button>
+        {elevation !== null && <p>Elevation at center: {elevation} meters</p>}
       </div>
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}
-        zoom={17}
+        zoom={14}
         onLoad={onLoad}
         onUnmount={onUnmount}
         onClick={handleMapClick}
+        mapTypeId="satellite"
       >
         {clickedLocation && (
           <Marker
             position={clickedLocation}
             title={`Clicked Location`}
+           
           />
         )}
       </GoogleMap>
@@ -88,4 +120,4 @@ function MyComponent() {
   ) : <></>;
 }
 
-export default React.memo(MyComponent);
+export default DashbboardHomemain;
