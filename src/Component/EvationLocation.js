@@ -30,7 +30,7 @@ function EvationLocation() {
   const [pathLoss, setPathLoss] = useState(null);
   console.log(locationName)
 
-const  name = population.filter((item)=>  item.Name == locationName ).map((item,index)=>{
+const  name = population?.filter((item)=>  item.Name == locationName )?.map((item,index)=>{
   return(
     <div key={index} className='' style={{display:'flex', gap:10}}>
   <div> Name of Place Scanned:  {item.Name},</div>
@@ -132,6 +132,7 @@ const southwest = {
         const elevations = [];
         for (const coordinate of scanCoordinates) {
           const elevation = await getElevationForCoordinate(coordinate);
+        console.log("undefine",coordinate)
           if (elevation !== null) {
             elevations.push({ elevation, coordinate });
           }
