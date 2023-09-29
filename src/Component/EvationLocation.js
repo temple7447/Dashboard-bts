@@ -129,25 +129,30 @@ const southwest = {
 
       // Sort elevations and keep the top numTopAltitudes
       const findTopElevations = async () => {
-        const elevations = [];
-        for (const coordinate of scanCoordinates) {
+        const elevationPromises = scanCoordinates?.map(async (coordinate) => {
           const elevation = await getElevationForCoordinate(coordinate);
-        console.log("undefine",coordinate)
-          if (elevation !== null) {
-            elevations.push({ elevation, coordinate });
-          }
-          scannedCoordinates.push(coordinate);
-        }
-        elevations.sort((a, b) => b.elevation - a.elevation);
-        return elevations.slice(0, numTopAltitudes);
+          console.log("undefined", coordinate);
+          return { elevation, coordinate };
+        });
+      
+        const elevations = await Promise.all(elevationPromises);
+      
+        const validElevations = elevations.filter((elevationData) => elevationData.elevation !== null);
+      
+        validElevations.sort((a, b) => b.elevation - a.elevation);
+      
+        const topElevations = validElevations.slice(0, numTopAltitudes);
+      
+        return topElevations;
       };
+      
 
       findTopElevations()
         .then((topElevations) => {
           setTopElevations(topElevations);
         })
         .catch((error) => {
-          console.error('Error fetching elevations:', error);
+          console.error('Error fetching elevations:');
         });
     }
   }, [isLoaded, map, numTopAltitudes]);

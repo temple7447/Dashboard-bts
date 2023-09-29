@@ -43,7 +43,7 @@ const Setting = () => {
 
 <FormElements />
 <HataPathLossCalculator />
-<Test />
+{/* <Test /> */}
 {/* <BuildingNumberFinder /> */}
     </div>
   )
