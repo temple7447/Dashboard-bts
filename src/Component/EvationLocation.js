@@ -21,8 +21,12 @@ function EvationLocation() {
   const [scannedCoordinates, setScannedCoordinates] = useState([]);
   const {checkOrdinate, setCheckOrdinate } = useState(null)
   const [openModal, setOpenModal] = useState();
+  const [countpopulation, setcountpopulation] = useState()
   const emailInputRef = useRef(null)
   const props = { openModal, setOpenModal, emailInputRef };
+  const [modelcovalue, setmodelcovalue] = useState()
+
+  const [modelat, setmodelat] = useState('')
 
   let [numTopAltitudes, setnumTopAltitudes] = useState(5)
   const [frequency, setFrequency] = useState(743.25); // Default frequency in MHz
@@ -30,7 +34,11 @@ function EvationLocation() {
   const [pathLoss, setPathLoss] = useState(null);
   console.log(locationName)
 
+//   useEffect(()=>{
+// console.log(countpopulation)
+//   }, [])
 const  name = population?.filter((item)=>  item.Name == locationName )?.map((item,index)=>{
+ 
   return(
     <div key={index} className='' style={{display:'flex', gap:10}}>
   <div> Name of Place Scanned:  {item.Name},</div>
@@ -38,6 +46,11 @@ const  name = population?.filter((item)=>  item.Name == locationName )?.map((ite
   </div>
   )
 })
+const  modealInfo = population?.filter((item)=> { return item.Name == locationName })
+
+
+
+
 
 useEffect(()=>{
   function readUserData(userId) {
@@ -127,11 +140,12 @@ const southwest = {
         });
       };
 
+
       // Sort elevations and keep the top numTopAltitudes
       const findTopElevations = async () => {
         const elevationPromises = scanCoordinates?.map(async (coordinate) => {
           const elevation = await getElevationForCoordinate(coordinate);
-          console.log("undefined", coordinate);
+          // console.log("undefined", coordinate);
           return { elevation, coordinate };
         });
       
@@ -168,9 +182,12 @@ const southwest = {
 
   const HandleShowModel = (item)=>{
     // setCheckOrdinate(item)
+
+    setmodelcovalue(item)
     props.setOpenModal('initial-focus')
   }
 
+  console.log("check",modelcovalue)
   // useEffect(()=>{
   //   console.log("selected Value", topElevations)
   //   console.log("selected Value check", checkOrdinate)
@@ -246,7 +263,7 @@ Elevation Value
           <Table.Cell> {lng} </Table.Cell>
           <Table.Cell>  {lat}  </Table.Cell>
           <Table.Cell> {elevation}</Table.Cell>
-          <Table.Cell>      <Button onClick={()=>{ calculatePathLoss(); HandleShowModel(item)}}>Check</Button></Table.Cell>
+          <Table.Cell>      <Button onClick={()=>{ calculatePathLoss(); HandleShowModel(item, locationName, modealInfo)}}>Check</Button></Table.Cell>
           <Table.Cell>
             <a
               className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
@@ -281,17 +298,35 @@ Elevation Value
         onClose={() => props.setOpenModal(undefined)}
         initialFocus={props.emailInputRef}
       >
-        <Modal.Header />
+        <Modal.Header style={{textAlign:'center',}}>
+    <div style={{textAlign:'center', alignSelf:'center'}}>BTS Modals Evaluator</div>
+        </Modal.Header>
         <Modal.Body>
           <div className="space-y-6">
-            <h3 className="text-xl font-medium text-gray-900 dark:text-white">Evaluator</h3>
-            <h3>pathLoss: {pathLoss}db</h3>
-          
+          <div>elevation:{modelcovalue?.elevation}, coordinate: latitude - {modelcovalue?.coordinate?.lat}, longitude - {modelcovalue?.coordinate?.lng},  place: {locationName} </div>
+            {/* <h3>pathLoss: {pathLoss}db</h3> */}
+            <div className='' style={{display:'flex',gap:10}}>
+            <div className='space-y-6'>
          
-            <div className="w-full">
-              <Button>Log in to your account</Button>
-            </div>
-          
+         <div onClick={()=> alert("wewe")} className="w-full">
+           <Button >Modified Free Space</Button>
+         </div>
+         <div className="w-full">
+           <Button>Modified Hata Model ITV</Button>
+         </div>
+         <div className="w-full">
+           <Button>Egli Model EBS</Button>
+         </div>
+         <div className="w-full">
+           <Button>Egli Model ITV</Button>
+         </div>
+         
+         </div> 
+         
+          <div style={{  borderLeftWidth:10, borderLeftColor:'black', padding:"10px"}}>
+            sdsds
+          </div>
+          </div>
           </div>
         </Modal.Body>
       </Modal>
