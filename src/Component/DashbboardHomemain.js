@@ -26,7 +26,7 @@ function getElevation(location) {
 }
 
 function DashbboardHomemain() {
-    const  { apiKey, setlatgeo , latgeo, setlonggeo, longgeo,isLoaded} = useInformation()
+    const  { apiKey, setlatgeo , latgeo, setlonggeo, longgeo,isLoaded, setLocationName, locationName} = useInformation()
     const center = {
         lat: latgeo || 6.4,
         lng:  longgeo || 7.149430399999999
@@ -37,7 +37,6 @@ function DashbboardHomemain() {
 //   });
 
   const [map, setMap] = useState(null);
-  const [locationName, setLocationName] = useState('');
   const [clickedLocation, setClickedLocation] = useState(null);
   const [elevation, setElevation] = useState(null);
 

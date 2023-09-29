@@ -3,7 +3,8 @@ import { useInformation } from '../Provider'
 import React, { useEffect, useState, useRef } from 'react';
 import { GoogleMap, useJsApiLoader, Marker, Circle } from '@react-google-maps/api';
 import { Button, Checkbox, Label, Modal, TextInput, Table } from 'flowbite-react';
-
+import { getDatabase, ref, set, get } from "firebase/database";
+import population from "./Population";
 const containerStyle = {
   height: '70vh',
 };
@@ -11,10 +12,10 @@ const containerStyle = {
 
 
 const numPoints = 10; // Adjust the number of points as needed
-const numTopAltitudes = 3; // Number of top altitudes to circle
+
 
 function EvationLocation() {
-  const { apiKey, setlatgeo, latgeo, setlonggeo, longgeo, isLoaded } = useInformation()
+  const { apiKey, setlatgeo, latgeo, setlonggeo, longgeo, isLoaded, setLocationName, locationName } = useInformation()
   const [map, setMap] = useState(null);
   const [topElevations, setTopElevations] = useState([]);
   const [scannedCoordinates, setScannedCoordinates] = useState([]);
@@ -22,6 +23,56 @@ function EvationLocation() {
   const [openModal, setOpenModal] = useState();
   const emailInputRef = useRef(null)
   const props = { openModal, setOpenModal, emailInputRef };
+
+  let [numTopAltitudes, setnumTopAltitudes] = useState(5)
+  const [frequency, setFrequency] = useState(743.25); // Default frequency in MHz
+  const [distance, setDistance] = useState(1.0); // Default distance in kilometers
+  const [pathLoss, setPathLoss] = useState(null);
+  console.log(locationName)
+
+const  name = population.filter((item)=>  item.Name == locationName ).map((item,index)=>{
+  return(
+    <div key={index} className='' style={{display:'flex', gap:10}}>
+  <div> Name of Place Scanned:  {item.Name},</div>
+  <div>Population in the Area: {item.population} </div>
+  </div>
+  )
+})
+
+useEffect(()=>{
+  function readUserData(userId) {
+    const db = getDatabase();
+    const userRef = ref(db, 'ElevationChanges/' + userId);
+  
+    // Use the `get` function to retrieve data from the specified reference
+    get(userRef)
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          const userData = snapshot.val();
+          console.log('Data retrieved:', userData.Iteration);
+          const iterationAsInt = parseInt(userData.Iteration, 10);
+          setnumTopAltitudes(iterationAsInt)
+          console.log(iterationAsInt)
+      
+     
+        } else {
+          console.log('No data available');
+        }
+      })
+      .catch((error) => {
+        console.error('Error reading data:', error);
+      });
+  }
+  readUserData("BTS");
+},[numTopAltitudes])
+
+
+const calculatePathLoss = () => {
+
+  const PL = 31.09 + 20 * Math.log10(frequency) + 20 * Math.log10(distance);
+  setPathLoss(PL);
+};
+
 
 const differ = 0.05
   const validLat = typeof latgeo === 'number' ? latgeo : 7.110653; // Default to 7.110653 if latgeo is not a number
@@ -39,7 +90,7 @@ const southwest = {
   };
 
   useEffect(() => {
-    if (isLoaded && map) {
+    if (isLoaded && map ) {
       const latStep = (northeast.lat - southwest.lat) / numPoints;
       const lngStep = (northeast.lng - southwest.lng) / numPoints;
 
@@ -98,7 +149,7 @@ const southwest = {
           console.error('Error fetching elevations:', error);
         });
     }
-  }, [isLoaded, map]);
+  }, [isLoaded, map, numTopAltitudes]);
 
   const onLoad = (map) => {
    
@@ -113,12 +164,17 @@ const southwest = {
     // setCheckOrdinate(item)
     props.setOpenModal('initial-focus')
   }
-  console.log("selected Value", topElevations)
-  console.log("selected Value check", checkOrdinate)
+
+  // useEffect(()=>{
+  //   console.log("selected Value", topElevations)
+  //   console.log("selected Value check", checkOrdinate)
+  // },[])
+
   useEffect(() => {
     // Log the scanned coordinates when the component mounts
     console.log('Scanned Coordinates:', scannedCoordinates);
   }, [scannedCoordinates]);
+
 
 
   return isLoaded ? (
@@ -150,7 +206,7 @@ const southwest = {
         ))}
 
       </GoogleMap>
-      <div>Total Coordinate Scanned:{scannedCoordinates.length}</div>
+      <div style={{display:'flex', gap:10}}>Total Coordinate Scanned:{scannedCoordinates.length},   Number of Atitude to be Pick: {numTopAltitudes}, {name}</div>
       <div>
       <Table striped>
       <Table.Head>
@@ -184,7 +240,7 @@ Elevation Value
           <Table.Cell> {lng} </Table.Cell>
           <Table.Cell>  {lat}  </Table.Cell>
           <Table.Cell> {elevation}</Table.Cell>
-          <Table.Cell>      <Button onClick={()=> HandleShowModel(item)}>Check</Button></Table.Cell>
+          <Table.Cell>      <Button onClick={()=>{ calculatePathLoss(); HandleShowModel(item)}}>Check</Button></Table.Cell>
           <Table.Cell>
             <a
               className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
@@ -222,37 +278,14 @@ Elevation Value
         <Modal.Header />
         <Modal.Body>
           <div className="space-y-6">
-            <h3 className="text-xl font-medium text-gray-900 dark:text-white">Sign in to our platform</h3>
-            <div>
-              <div className="mb-2 block">
-                <Label htmlFor="email" value="Your email" />
-              </div>
-              <TextInput id="email" ref={props.emailInputRef} placeholder="name@company.com" required />
-            </div>
-            <div>
-              <div className="mb-2 block">
-                <Label htmlFor="password" value="Your password" />
-              </div>
-              <TextInput id="password" type="password" required />
-            </div>
-            <div className="flex justify-between">
-              <div className="flex items-center gap-2">
-                <Checkbox id="remember" />
-                <Label htmlFor="remember">Remember me</Label>
-              </div>
-              <a href="/modal" className="text-sm text-cyan-700 hover:underline dark:text-cyan-500">
-                Lost Password?
-              </a>
-            </div>
+            <h3 className="text-xl font-medium text-gray-900 dark:text-white">Evaluator</h3>
+            <h3>pathLoss: {pathLoss}db</h3>
+          
+         
             <div className="w-full">
               <Button>Log in to your account</Button>
             </div>
-            <div className="flex justify-between text-sm font-medium text-gray-500 dark:text-gray-300">
-              Not registered?&nbsp;
-              <a href="/modal" className="text-cyan-700 hover:underline dark:text-cyan-500">
-                Create account
-              </a>
-            </div>
+          
           </div>
         </Modal.Body>
       </Modal>
@@ -263,3 +296,6 @@ Elevation Value
 }
 
 export default EvationLocation
+
+
+

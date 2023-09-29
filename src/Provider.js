@@ -15,7 +15,7 @@ export function UserProvider({ children }) {
   const  apiKey = "AIzaSyAwjwRWC6rksF7GnJVyx6-b_hspjvWuI3Y"
   const [latgeo, setlatgeo] = useState('')
   const [longgeo, setlonggeo] = useState('')
-
+  const [locationName, setLocationName] = useState('');
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
@@ -28,7 +28,7 @@ export function UserProvider({ children }) {
   };
 
   return (
-    <UserContext.Provider value={{ userName, updateUser, apiKey, setlatgeo , latgeo, setlonggeo, longgeo, isLoaded}}>
+    <UserContext.Provider value={{ userName, updateUser, apiKey, setlatgeo , latgeo, setlonggeo, longgeo, isLoaded, setLocationName, locationName}}>
       {children}
     </UserContext.Provider>
   );
