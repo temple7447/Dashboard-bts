@@ -6,11 +6,15 @@ import { Button, Checkbox, Label, Modal, TextInput, Table } from 'flowbite-react
 import { getDatabase, ref, set, get } from "firebase/database";
 import population from "./Population";
 import FormElements from './Model';
+import iconAntenna from  './assest/antenna.png'
 const containerStyle = {
   height: '70vh',
 };
 
-
+const iconOptions = {
+  url: iconAntenna, // Path to your custom icon image
+  scaledSize: new window.google.maps.Size(100, 100), // Specify the desired icon size
+};
 
 const numPoints = 10; // Adjust the number of points as needed
 
@@ -20,7 +24,7 @@ function EvationLocation() {
   const [map, setMap] = useState(null);
   const [topElevations, setTopElevations] = useState([]);
   const [scannedCoordinates, setScannedCoordinates] = useState([]);
-  const [checkOrdinatediff, setCheckOrdinatediff]  = useState(0.001)
+  const [checkOrdinatediff, setCheckOrdinatediff]  = useState(0.05)
   const [openModal, setOpenModal] = useState();
   const [countpopulation, setcountpopulation] = useState()
   const emailInputRef = useRef(null)
@@ -29,7 +33,7 @@ function EvationLocation() {
 
   const [modelat, setmodelat] = useState('')
 
-  let [numTopAltitudes, setnumTopAltitudes] = useState(0)
+  let [numTopAltitudes, setnumTopAltitudes] = useState(null)
   const [frequency, setFrequency] = useState(743.25); // Default frequency in MHz
   const [distance, setDistance] = useState(1.0); // Default distance in kilometers
   const [pathLoss, setPathLoss] = useState(null);
@@ -59,11 +63,40 @@ useEffect(()=>{
       .then((snapshot) => {
         if (snapshot.exists()) {
           const userData = snapshot.val();
-          console.log('Data retrieved:', typeof userData.Iteration);
-          console.log('Data retrieved:', userData.coordinate);
+          console.log('Data retrieved:',  userData.Iteration);
+          // console.log('Data retrieved:', userData.coordinate);
           const iterationAsInt = parseInt(userData.Iteration, 10); 
-          const coordinateAsFloat = parseInt(userData.coordinate, 10); 
-          setnumTopAltitudes(iterationAsInt)
+          // const coordinateAsFloat = parseInt(userData.coordinate, 10); 
+        setnumTopAltitudes(iterationAsInt)
+       
+   
+        } else {
+          console.log('No data available');
+        }
+      })
+      .catch((error) => {
+        console.error('Error reading data:', error);
+      });
+  }
+  readUserData("BTS");
+},[isLoaded, map, numTopAltitudes, useDistace,checkOrdinatediff ])
+
+
+useEffect(()=>{
+  function readUserData(userId) {
+    const db = getDatabase();
+    const userRef = ref(db, 'ElevationChanges/' + userId);
+  
+    // Use the `get` function to retrieve data from the specified reference
+    get(userRef)
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          const userData = snapshot.val();
+      
+          console.log('Data retrieved:', userData.coordinate);
+         
+          const coordinateAsFloat = parseFloat(userData.coordinate, 10); 
+
           setCheckOrdinatediff(coordinateAsFloat)
    
         } else {
@@ -75,7 +108,7 @@ useEffect(()=>{
       });
   }
   readUserData("BTS");
-},[numTopAltitudes,useDistace,checkOrdinatediff])
+},[isLoaded, map, numTopAltitudes, useDistace,checkOrdinatediff ])
 
 
 const calculatePathLoss = () => {
@@ -120,6 +153,7 @@ const southwest = {
         currentLat += latStep;
       }
 
+  // setScannedCoordinates(scanCoordinates)
       // Function to fetch elevation for a single coordinate
       const getElevationForCoordinate = async (coordinate) => {
         const elevator = new window.google.maps.ElevationService();
@@ -139,25 +173,23 @@ const southwest = {
       };
 
 
+
       // Sort elevations and keep the top numTopAltitudes
       const findTopElevations = async () => {
-        const elevationPromises = scanCoordinates?.map(async (coordinate) => {
+        const elevations = [];
+        for (const coordinate of scanCoordinates) {
           const elevation = await getElevationForCoordinate(coordinate);
-          // console.log("undefined", coordinate);
-          return { elevation, coordinate };
-        });
-      
-        const elevations = await Promise.all(elevationPromises);
-      
-        const validElevations = elevations.filter((elevationData) => elevationData.elevation !== null);
-      
-        validElevations.sort((a, b) => b.elevation - a.elevation);
-      
-        const topElevations = validElevations.slice(0, numTopAltitudes);
-      
-        return topElevations;
+        // console.log("undefine",coordinate)
+          if (elevation !== null) {
+            elevations.push({ elevation, coordinate });
+          }
+          scannedCoordinates.push(coordinate);
+        }
+        elevations.sort((a, b) => b.elevation - a.elevation);
+        return elevations.slice(0, numTopAltitudes);
       };
       
+    
 
       findTopElevations()
         .then((topElevations) => {
@@ -167,7 +199,7 @@ const southwest = {
           console.error('Error fetching elevations:');
         });
     }
-  }, [isLoaded, map, numTopAltitudes, useDistace, checkOrdinatediff]);
+  }, [isLoaded, map, numTopAltitudes, useDistace]);
 
   const onLoad = (map) => {
    
@@ -194,7 +226,8 @@ const southwest = {
   useEffect(() => {
     // Log the scanned coordinates when the component mounts
     console.log('Scanned Coordinates:', scannedCoordinates);
-  }, [scannedCoordinates]);
+    
+  }, [scannedCoordinates,checkOrdinatediff,topElevations]);
 
 
 
@@ -213,7 +246,10 @@ const southwest = {
           <React.Fragment key={index}>
             <Marker
               position={coordinate}
-              label={`Elevation: ${elevation.toFixed(2)} meters`}
+              label={`Elevation: ${elevation.toFixed(4)} meters`}
+              icon={iconOptions}
+
+
             />
             <Circle
               center={coordinate}

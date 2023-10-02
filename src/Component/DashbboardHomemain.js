@@ -83,7 +83,7 @@ function DashbboardHomemain() {
     }
 
     setTimeout(() => {
-      navigate("/Setting"); 
+      // navigate("/Setting"); 
     },2000);
   };
 
