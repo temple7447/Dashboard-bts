@@ -83,7 +83,7 @@ function DashbboardHomemain() {
     }
 
     setTimeout(() => {
-      // navigate("/Setting"); 
+      navigate("/Setting"); 
     },2000);
   };
 
@@ -104,7 +104,7 @@ function DashbboardHomemain() {
           onChange={(e) => setLocationName(e.target.value)}
         />
         <button style={{backgroundColor:'blue', padding:10,borderRadius:5}} className='mx-3' onClick={handleGeocodeClick}>Get Coordinate</button>
-        {elevation !== null && <p>Elevation at center: {elevation} meters</p>}
+        {/* {elevation !== null && <p>Elevation at center: {elevation} meters</p>} */}
       </div>
       <GoogleMap
         mapContainerStyle={containerStyle}
