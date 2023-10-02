@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
 import { useInformation } from '../Provider'
+import {  useNavigate } from 'react-router-dom';
 const containerStyle = {
 
   height: '90vh',
@@ -25,7 +26,10 @@ function getElevation(location) {
   });
 }
 
+
 function DashbboardHomemain() {
+
+  const navigate = useNavigate();
     const  { apiKey, setlatgeo , latgeo, setlonggeo, longgeo,isLoaded, setLocationName, locationName} = useInformation()
     const center = {
         lat: latgeo || 6.4,
@@ -77,6 +81,10 @@ function DashbboardHomemain() {
         }
       });
     }
+
+    setTimeout(() => {
+      navigate("/Setting"); 
+    },2000);
   };
 
   const handleMapClick = (e) => {

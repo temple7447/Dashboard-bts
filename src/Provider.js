@@ -1,6 +1,6 @@
 // UserContext.js
 import React, { createContext, useContext, useState } from 'react';
-import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
+import { useJsApiLoader,  } from '@react-google-maps/api';
 // Create a context for the user data
 const UserContext = createContext();
 
@@ -16,10 +16,10 @@ export function UserProvider({ children }) {
   const [latgeo, setlatgeo] = useState('')
   const [longgeo, setlonggeo] = useState('')
   const [locationName, setLocationName] = useState('');
-
+const [useDistace, setdistance] = useState(3000)
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: 'AIzaSyAwjwRWC6rksF7GnJVyx6-b_hspjvWuI3Y', // Replace with your Google Maps API key
+    googleMapsApiKey: 'AIzaSyDVBRpXp9XL78sy4Ct5aBvHENRKpX7eMfw', // Replace with your Google Maps API key
     libraries: ['elevation'], // Add 'elevation' library
   });
 
@@ -28,7 +28,7 @@ export function UserProvider({ children }) {
   };
 
   return (
-    <UserContext.Provider value={{ userName, updateUser, apiKey, setlatgeo , latgeo, setlonggeo, longgeo, isLoaded, setLocationName, locationName}}>
+    <UserContext.Provider value={{ userName, updateUser, apiKey, setlatgeo , latgeo, setlonggeo, longgeo, isLoaded, setLocationName, locationName, useDistace, setdistance}}>
       {children}
     </UserContext.Provider>
   );

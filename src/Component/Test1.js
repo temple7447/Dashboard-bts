@@ -6,7 +6,7 @@ const BuildingNumberFinder = () => {
   const [buildingNumber, setBuildingNumber] = useState(null);
 
   const handleFindBuildingNumber = () => {
-    const apiKey = 'AIzaSyAwjwRWC6rksF7GnJVyx6-b_hspjvWuI3Y'; // Replace with your Google Maps API key
+    // const apiKey = 'AIzaSyAwjwRWC6rksF7GnJVyx6-b_hspjvWuI3Y'; // Replace with your Google Maps API key
     const latLng = new window.google.maps.LatLng(latitude, longitude);
     const geocoder = new window.google.maps.Geocoder();
 
