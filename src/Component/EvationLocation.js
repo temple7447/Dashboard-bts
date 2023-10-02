@@ -11,10 +11,7 @@ const containerStyle = {
   height: '70vh',
 };
 
-const iconOptions = {
-  url: iconAntenna, // Path to your custom icon image
-  scaledSize: new window.google.maps.Size(100, 100), // Specify the desired icon size
-};
+
 
 const numPoints = 10; // Adjust the number of points as needed
 
@@ -52,6 +49,13 @@ const  name = population?.filter((item)=>  item.Name == locationName )?.map((ite
   )
 })
 const  modealInfo = population?.filter((item)=> { return item.Name == locationName })
+
+
+
+const iconOptions = {
+  url: iconAntenna, // Path to your custom icon image
+  scaledSize: new window.google.maps.Size(100, 100), // Specify the desired icon size
+};
 
 useEffect(()=>{
   function readUserData(userId) {
