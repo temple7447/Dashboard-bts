@@ -6,7 +6,7 @@ import app from '../firebase';
 import { getDatabase, ref, set } from "firebase/database";
 import { Alert } from 'flowbite-react';
 import RollingCircleLoader from './RollingCircleLoader';
-// import BarChart from './Chart';
+import BarChart from './Chart';
 
 
 const containerStyle = {
@@ -222,7 +222,7 @@ function DashbboardHomemain() {
       </div>
       </div>
 
-      {/* <BarChart /> */}
+      <BarChart />
     </div>
   ) : <RollingCircleLoader />;
 }
