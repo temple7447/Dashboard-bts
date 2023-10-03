@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
 import { useInformation } from '../Provider'
 import {  useNavigate } from 'react-router-dom';
+import app from '../firebase';
+import { getDatabase, ref, set } from "firebase/database";
+import { Alert } from 'flowbite-react';
+import RollingCircleLoader from './RollingCircleLoader';
 const containerStyle = {
 
   height: '90vh',
@@ -28,6 +32,41 @@ function getElevation(location) {
 
 
 function DashbboardHomemain() {
+  const [Iteration, setIteration] = useState('');
+  const [coordinate, setCoordinate] = useState('');
+  const [alertme, setAlertme] = useState(false);
+  const [alertmesuc, setAlertmesuc] = useState(false);
+
+
+  const writeUserData = (userId) => {
+    if (Iteration && coordinate) {
+        const Iterationv = parseFloat(Iteration)
+        const coordinatev = parseFloat(coordinate)
+      const db = getDatabase();
+      const userRef = ref(db, 'ElevationChanges/' + userId);
+
+      set(userRef, {
+        Iteration: Iterationv,
+        coordinate: coordinatev
+      });
+
+      setIteration('');
+      setCoordinate('');
+      setAlertmesuc(true);
+      setTimeout(() => {
+        setAlertmesuc(false);
+      }, 4000);
+    } else {
+      setAlertme(true);
+      setTimeout(() => {
+        setAlertme(false);
+      }, 4000);
+    }
+  };
+
+  const handleWarningDismiss = () => setAlertme(false);
+  const handleSuccessDismiss = () => setAlertmesuc(false);
+
 
   const navigate = useNavigate();
     const  { apiKey, setlatgeo , latgeo, setlonggeo, longgeo,isLoaded, setLocationName, locationName} = useInformation()
@@ -82,9 +121,9 @@ function DashbboardHomemain() {
       });
     }
 
-    setTimeout(() => {
-      navigate("/Setting"); 
-    },2000);
+    // setTimeout(() => {
+    //   navigate("/Setting"); 
+    // },2000);
   };
 
   const handleMapClick = (e) => {
@@ -104,27 +143,64 @@ function DashbboardHomemain() {
           onChange={(e) => setLocationName(e.target.value)}
         />
         <button style={{backgroundColor:'blue', padding:10,borderRadius:5}} className='mx-3' onClick={handleGeocodeClick}>Get Coordinate</button>
-        {/* {elevation !== null && <p>Elevation at center: {elevation} meters</p>} */}
-      </div>
-      <GoogleMap
-        mapContainerStyle={containerStyle}
-        center={center}
-        zoom={14}
-        onLoad={onLoad}
-        onUnmount={onUnmount}
-        onClick={handleMapClick}
-        mapTypeId="satellite"
-      >
-        {clickedLocation && (
-          <Marker
-            position={clickedLocation}
-            title={`Clicked Location`}
-           
-          />
+
+        <div>
+        {alertme && (
+          <Alert color="warning" onDismiss={handleWarningDismiss}>
+            <span>
+              <p>
+                <span className="font-medium">Warning alert!</span>
+                All fields must be inputted.
+              </p>
+            </span>
+          </Alert>
         )}
-      </GoogleMap>
+        {alertmesuc && (
+          <Alert color="success" onDismiss={handleSuccessDismiss}>
+            <span>
+              <p>
+                <span className="font-medium">Success alert!</span>
+                All data was successfully sent.
+              </p>
+            </span>
+          </Alert>
+        )}
+        <div>Elevation Value Changes</div>
+        <div className='my-5'>
+          <label htmlFor='number'>Number of Elevation</label>
+          <input
+            value={Iteration}
+            placeholder='Default coordinate diff is 0'
+            onChange={(e) => setIteration(e.target.value)}
+            style={{ height: '30px', borderRadius: 5, width: '50vw' }}
+            type="number"
+            step="any"
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor='number'>Coordinate difference</label>
+          <input
+            value={coordinate}
+            style={{ height: '30px', borderRadius: 5, width: '50vw' }}
+            type="number"
+            step="any"
+            placeholder='Default coordinate diff is 0.05'
+            onChange={(e) => setCoordinate(e.target.value)}
+            required
+          />
+        </div>
+        <button
+          style={{ backgroundColor: 'blue', color: 'white', borderRadius: 10, alignSelf: 'center' }}
+          className='p-2'
+          onClick={() => writeUserData("BTS")}
+        >
+          Save Changes
+        </button>
+      </div>
+      </div>
     </div>
-  ) : <></>;
+  ) : <RollingCircleLoader />;
 }
 
 export default DashbboardHomemain;

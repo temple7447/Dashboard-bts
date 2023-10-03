@@ -8,7 +8,7 @@ const Unique = () => {
     <div style={{height:'100vh'}} >
     <SidebarPage />
     </div>
-    <div style={{  width: '80vw',}} className='mx-auto'>
+    <div style={{  width: '100vw',}} className='mx-auto'>
       <Outlet />
       </div>
 

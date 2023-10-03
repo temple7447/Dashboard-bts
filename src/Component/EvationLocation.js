@@ -7,6 +7,7 @@ import { getDatabase, ref, set, get } from "firebase/database";
 import population from "./Population";
 import FormElements from './Model';
 import iconAntenna from  './assest/antenna.png'
+import './style.css'
 const containerStyle = {
   height: '70vh',
 };
@@ -267,7 +268,16 @@ const southwest = {
         ))}
 
       </GoogleMap>
-      <div style={{display:'flex', gap:10}}>Total Coordinate Scanned:{scannedCoordinates.length},   Number of Atitude to be Pick: {numTopAltitudes}, {name}</div>
+      <div className="info-container">
+  <div>Name of Place: <span className="highlight">{name}</span></div>
+  <div>Total Coordinate Scanned: <span className="highlight">{scannedCoordinates.length}</span></div>
+  <div>Number of Altitude to be Picked: <span className="highlight">{numTopAltitudes}</span></div>
+  <div>Coverage Radius (Kms): <span className="highlight">{useDistace}</span></div>
+  <div>Bandwidth Required (Kms): <span className="highlight">0.5</span></div>
+  <div>Weighted Utility: <span className="highlight">305.85</span></div>
+</div>
+
+      {/* <div>Total Coordinate Scanned: <span> {scannedCoordinates.length}</span></div> */}
       <div>
       <Table striped>
       <Table.Head>
