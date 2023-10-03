@@ -39,6 +39,7 @@ function DashbboardHomemain() {
   const [coordinate, setCoordinate] = useState('');
   const [alertme, setAlertme] = useState(false);
   const [alertmesuc, setAlertmesuc] = useState(false);
+  const [alertmesuca, setAlertmesuca] = useState(false);
 
 
   const writeUserData = (userId) => {
@@ -72,6 +73,7 @@ function DashbboardHomemain() {
 
   const handleWarningDismiss = () => setAlertme(false);
   const handleSuccessDismiss = () => setAlertmesuc(false);
+  const handleSuccessDismissa = () => setAlertmesuca(false);
 
 
   const navigate = useNavigate();
@@ -112,14 +114,16 @@ function DashbboardHomemain() {
   }, []);
 
   const handleGeocodeClick = () => {
+    setLocationName('')
+    setAlertmesuca(true);
+    setTimeout(() => {
+      setAlertmesuca(false);
+    }, 4000);
     if (map && locationName) {
       const geocoder = new window.google.maps.Geocoder();
       geocoder.geocode({ address: locationName }, (results, status) => {
         if (status === 'OK' && results.length > 0) {
-          setAlertmesuc(true);
-          setTimeout(() => {
-            setAlertmesuc(false);
-          }, 4000);
+        
           const { lat, lng } = results[0].geometry.location;
           console.log(`Coordinates for "${locationName}": Latitude ${lat()}, Longitude ${lng()}`);
           setlatgeo(lat())
@@ -143,6 +147,16 @@ function DashbboardHomemain() {
   return isLoaded ? (
     <div>
       <div className='mx-5'>
+      {alertmesuca && (
+          <Alert color="success" onDismiss={handleSuccessDismissa}>
+            <span>
+              <p>
+                <span className="font-medium">Success alert!</span>
+                data was successfully sent.
+              </p>
+            </span>
+          </Alert>
+        )}
         <input
         className='my-3 rounded-2xl w-96'
           type="text"

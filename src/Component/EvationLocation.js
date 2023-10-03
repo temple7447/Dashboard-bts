@@ -331,7 +331,7 @@ Elevation Value
 ) : (
   <div className='my-3 text-center ' style={{alignSelf:'center'}}>
     Loading...
-    <Button onClick={()=>{ calculatePathLoss(); HandleShowModel( locationName, modealInfo)}}>Check</Button>
+    {/* <Button onClick={()=>{ calculatePathLoss(); HandleShowModel( locationName, modealInfo)}}>Check</Button> */}
   </div>
 )}
 
