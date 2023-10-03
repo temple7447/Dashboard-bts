@@ -6,6 +6,9 @@ import app from '../firebase';
 import { getDatabase, ref, set } from "firebase/database";
 import { Alert } from 'flowbite-react';
 import RollingCircleLoader from './RollingCircleLoader';
+// import BarChart from './Chart';
+
+
 const containerStyle = {
 
   height: '90vh',
@@ -49,13 +52,16 @@ function DashbboardHomemain() {
         Iteration: Iterationv,
         coordinate: coordinatev
       });
-
+ 
       setIteration('');
       setCoordinate('');
       setAlertmesuc(true);
       setTimeout(() => {
         setAlertmesuc(false);
       }, 4000);
+      setTimeout(() => {
+      navigate("/location"); 
+    },2000);
     } else {
       setAlertme(true);
       setTimeout(() => {
@@ -121,9 +127,7 @@ function DashbboardHomemain() {
       });
     }
 
-    // setTimeout(() => {
-    //   navigate("/Setting"); 
-    // },2000);
+   
   };
 
   const handleMapClick = (e) => {
@@ -199,6 +203,8 @@ function DashbboardHomemain() {
         </button>
       </div>
       </div>
+
+      {/* <BarChart /> */}
     </div>
   ) : <RollingCircleLoader />;
 }

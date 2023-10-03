@@ -25,11 +25,11 @@ const SidebarPage = () => {
                         </Sidebar.Item>
                     </NavLink>
                
-                    <NavLink to='/Setting' >
+                    {/* <NavLink to='/Setting' >
                     <Sidebar.Item href="#" icon={HiAdjustments} >
                         <p>   Setting       </p>
                     </Sidebar.Item>
-                    </NavLink>
+                    </NavLink> */}
 
                 </Sidebar.ItemGroup>
             </Sidebar.Items>
