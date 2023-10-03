@@ -19,7 +19,7 @@ export function UserProvider({ children }) {
 const [useDistace, setdistance] = useState(3000)
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: 'AIzaSyDVBRpXp9XL78sy4Ct5aBvHENRKpX7eMfwz', // Replace with your Google Maps API key
+    googleMapsApiKey: 'AIzaSyDVBRpXp9XL78sy4Ct5aBvHENRKpX7eMfw', // Replace with your Google Maps API key
     libraries: ['elevation'], // Add 'elevation' library
   });
 
