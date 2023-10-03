@@ -116,6 +116,10 @@ function DashbboardHomemain() {
       const geocoder = new window.google.maps.Geocoder();
       geocoder.geocode({ address: locationName }, (results, status) => {
         if (status === 'OK' && results.length > 0) {
+          setAlertmesuc(true);
+          setTimeout(() => {
+            setAlertmesuc(false);
+          }, 4000);
           const { lat, lng } = results[0].geometry.location;
           console.log(`Coordinates for "${locationName}": Latitude ${lat()}, Longitude ${lng()}`);
           setlatgeo(lat())
@@ -146,7 +150,7 @@ function DashbboardHomemain() {
           value={locationName}
           onChange={(e) => setLocationName(e.target.value)}
         />
-        <button style={{backgroundColor:'blue', padding:10,borderRadius:5}} className='mx-3' onClick={handleGeocodeClick}>Get Coordinate</button>
+        <button style={{backgroundColor:'blue', padding:10,borderRadius:5}} className='mx-3' onClick={handleGeocodeClick}>Get location</button>
 
         <div>
         {alertme && (
@@ -164,7 +168,7 @@ function DashbboardHomemain() {
             <span>
               <p>
                 <span className="font-medium">Success alert!</span>
-                All data was successfully sent.
+                data was successfully sent.
               </p>
             </span>
           </Alert>

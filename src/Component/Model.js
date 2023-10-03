@@ -24,7 +24,7 @@ const FormElements = ({ modelcovalue, locationName, props }) => {
                 initialFocus={props.emailInputRef}
             >
                 <Modal.Header style={{ textAlign: 'center' }}>
-                    <div style={{ textAlign: 'center', alignSelf: 'center' }}>BTS Modals Evaluator</div>
+                    <div style={{ textAlign: 'center', alignSelf: 'center' }}>BTS Model Evaluator</div>
                 </Modal.Header>
                 <Modal.Body>
                     <div className="space-y-6">

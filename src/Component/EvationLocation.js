@@ -276,7 +276,7 @@ const southwest = {
   <div>Total Coordinate Scanned: <span className="highlight">{scannedCoordinates.length}</span></div>
   <div>Number of Altitude to be Picked: <span className="highlight">{numTopAltitudes}</span></div>
   <div>Coverage Radius (Kms): <span className="highlight">{useDistace}</span></div>
-  <div>Bandwidth Required (Kms): <span className="highlight">0.5</span></div>
+  <div>Bandwidth Required : <span className="highlight">0.5</span></div>
   <div>Weighted Utility: <span className="highlight">305.85</span></div>
 </div>
 
