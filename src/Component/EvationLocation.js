@@ -43,9 +43,9 @@ function EvationLocation() {
 const  name = population?.filter((item)=>  item.Name == locationName )?.map((item,index)=>{
  
   return(
-    <div key={index} className='' style={{display:'flex', gap:10}}>
-  <div> Name of Place Scanned:  {item.Name},</div>
-  <div>Population in the Area: {item.population} </div>
+    <div key={index} className='' style={{ gap:10}}>
+  <div> Name of Place Scanned:<span className="highlight"> {item.Name}</span> </div>
+  <div>Population in the Area: <span className="highlight"> {item.population}</span> </div>
   </div>
   )
 })
@@ -269,7 +269,9 @@ const southwest = {
 
       </GoogleMap>
       <div className="info-container">
-  <div>Name of Place: <span className="highlight">{name}</span></div>
+      {name}
+
+
   <div>Total Coordinate Scanned: <span className="highlight">{scannedCoordinates.length}</span></div>
   <div>Number of Altitude to be Picked: <span className="highlight">{numTopAltitudes}</span></div>
   <div>Coverage Radius (Kms): <span className="highlight">{useDistace}</span></div>
