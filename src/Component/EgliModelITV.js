@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './EgliModelITV.css';
 import { useInformation } from '../Provider';
 import { Alert } from 'flowbite-react';
+import Distance from './Distance';
 // Import the CSS file
 
 const EgliModelITV = () => {
@@ -72,11 +73,11 @@ const EgliModelITV = () => {
       <h2>Egli Model ITV Predition</h2>
       <div className="info-text">Transmission Height = 3048m and Receiver Height = 1.5</div>
       <label>
-        Distance (in kilometers):
+      Distance (in kilometers):
         <input type="number" value={distance} onChange={(e) => setDistance(e.target.value)} />
       </label>
       <button className="calculate-button my-4 mx-2"  onClick={calculateLogarithm}>Calculate</button>
-      <div onClick={HandleUsed} style={{backgroundColor:'blue', padding:10, borderRadius:5,textAlign:'center' }}>Use of distance</div>
+      <Distance distance={distance} setalertmesuc={setalertmesuc}  />
       {result !== null && (
         <div className="result-container"> {/* Apply CSS class to the result container */}
           <p>Power(Loss): {result.toFixed(2)}</p>

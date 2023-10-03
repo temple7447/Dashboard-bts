@@ -5,6 +5,7 @@ import EgliModelEBS from './EgliModelEBS';
 import ModifiedHataModelITV from './ModifiedHataModelITV';
 import ModifiedFreeSpace from './ModifiedFreeSpace';
 import EgliModelITV from './EgliModelITV';
+import './style.css'
 
 const FormElements = ({ modelcovalue, locationName, props }) => {
     const [selectedButton, setSelectedButton] = useState(null);
@@ -27,9 +28,11 @@ const FormElements = ({ modelcovalue, locationName, props }) => {
                 </Modal.Header>
                 <Modal.Body>
                     <div className="space-y-6">
-                        <div>
-                            Elevation: {modelcovalue?.elevation}, coordinate: latitude - {modelcovalue?.coordinate?.lat},
-                            longitude - {modelcovalue?.coordinate?.lng}, place: {locationName}
+                    <div className="info-container">
+                        <div> Elevation:  <span className="highlight">{modelcovalue?.elevation}</span></div>
+                        <div>latitude -coordinate  <span className="highlight">{modelcovalue?.coordinate?.lat}</span></div>
+                        <div> longitude-coordinate <span className="highlight">{modelcovalue?.coordinate?.lng}</span></div>
+                        <div> place: <span className="highlight">  {locationName}</span></div>
                         </div>
 <div style={{display:'flex', gap:10}}>
                         <div className='space-y-6'>

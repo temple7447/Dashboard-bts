@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import './ModifiedFreeSpace.css'; // Import the CSS file
 import { useInformation } from '../Provider';
 import { Alert } from 'flowbite-react';
+import Distance from './Distance';
 
 
 const ModifiedFreeSpace = () => {
@@ -13,18 +14,7 @@ const ModifiedFreeSpace = () => {
 const [alertmesuc, setalertmesuc] = useState(false)
 const {useDistace, setdistance} = useInformation() 
 
-  const HandleUsed  = ()=>{
-    if(distance.length > 0) {
-      const dKm = parseFloat(distance);
-      // useDistace, setDistance
-      setdistance(dKm)
-      setalertmesuc(true)
-    }else{
-      setalertme(true)
 
-    }
-   
-  }
 
   const handles = () => setalertmesuc(false);
   const handlew = () => setalertme(false);
@@ -70,14 +60,14 @@ const {useDistace, setdistance} = useInformation()
           </span>
         </Alert>
       )}
-      <h2>Formula Calculator</h2>
+      <h2>Modified Free Space  Predition</h2>
 <div>Frequecy = 743.25Mhz </div>
       <label>
-        Distance (in units):
+      Distance (in kilometers):
         <input type="number" value={distance} onChange={(e) => setDistance(e.target.value)} />
       </label>
       <button className="calculate-button my-4 mx-2" onClick={calculateFormula}>Calculate</button>
-      <div onClick={HandleUsed} style={{backgroundColor:'blue', padding:10, borderRadius:5, }}>Use of distance</div>
+<Distance distance={distance} setalertmesuc={setalertmesuc}  />
       {result !== null && (
         <div className="result-container">
           <p>Result: {result.toFixed(2)}</p>

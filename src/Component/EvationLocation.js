@@ -8,6 +8,7 @@ import population from "./Population";
 import FormElements from './Model';
 import iconAntenna from  './assest/antenna.png'
 import './style.css'
+import RollingCircleLoader from './RollingCircleLoader';
 const containerStyle = {
   height: '70vh',
 };
@@ -330,7 +331,7 @@ Elevation Value
 ) : (
   <div className='my-3 text-center ' style={{alignSelf:'center'}}>
     Loading...
-    {/* <Button onClick={()=>{ calculatePathLoss(); HandleShowModel( locationName, modealInfo)}}>Check</Button> */}
+    <Button onClick={()=>{ calculatePathLoss(); HandleShowModel( locationName, modealInfo)}}>Check</Button>
   </div>
 )}
 
@@ -345,7 +346,8 @@ Elevation Value
    <FormElements  modelcovalue={modelcovalue} locationName={locationName} props={props}/>
     </div>
   ) : (
-    <div >Loading...
+    <div >
+    <RollingCircleLoader />
     </div>
   );
 }
