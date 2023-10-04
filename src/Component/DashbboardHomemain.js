@@ -7,6 +7,7 @@ import { getDatabase, ref, set } from "firebase/database";
 import { Alert } from 'flowbite-react';
 import RollingCircleLoader from './RollingCircleLoader';
 import BarChart from './Chart';
+import MapChart from './Shatter';
 
 
 const containerStyle = {
@@ -35,6 +36,9 @@ function getElevation(location) {
 
 
 function DashbboardHomemain() {
+
+  const  { apiKey, setlatgeo , latgeo, setlonggeo, longgeo,isLoaded, setLocationName, locationName, shatterbar, setshatterbar} = useInformation()
+
   const [Iteration, setIteration] = useState('');
   const [coordinate, setCoordinate] = useState('');
   const [alertme, setAlertme] = useState(false);
@@ -77,7 +81,7 @@ function DashbboardHomemain() {
 
 
   const navigate = useNavigate();
-    const  { apiKey, setlatgeo , latgeo, setlonggeo, longgeo,isLoaded, setLocationName, locationName} = useInformation()
+
     const center = {
         lat: latgeo || 6.4,
         lng:  longgeo || 7.149430399999999
@@ -114,11 +118,7 @@ function DashbboardHomemain() {
   }, []);
 
   const handleGeocodeClick = () => {
-    setLocationName('')
-    setAlertmesuca(true);
-    setTimeout(() => {
-      setAlertmesuca(false);
-    }, 4000);
+
     if (map && locationName) {
       const geocoder = new window.google.maps.Geocoder();
       geocoder.geocode({ address: locationName }, (results, status) => {
@@ -134,7 +134,11 @@ function DashbboardHomemain() {
         }
       });
     }
-
+    setLocationName('')
+    setAlertmesuca(true);
+    setTimeout(() => {
+      setAlertmesuca(false);
+    }, 4000);
    
   };
 
@@ -223,6 +227,7 @@ function DashbboardHomemain() {
       </div>
 
       <BarChart />
+      <MapChart shatterbar={shatterbar} />
     </div>
   ) : <RollingCircleLoader />;
 }

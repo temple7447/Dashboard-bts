@@ -17,18 +17,20 @@ export function UserProvider({ children }) {
   const [longgeo, setlonggeo] = useState('')
   const [locationName, setLocationName] = useState('');
 const [useDistace, setdistance] = useState(3000)
+const [shatterbar, setshatterbar] = useState([])
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: 'AIzaSyDVBRpXp9XL78sy4Ct5aBvHENRKpX7eMfw', // Replace with your Google Maps API key
     libraries: ['elevation'], // Add 'elevation' library
   });
+  // AIzaSyDVBRpXp9XL78sy4Ct5aBvHENRKpX7eMfw
 
   const updateUser = (newName) => {
     setUserName(newName);
   };
 
   return (
-    <UserContext.Provider value={{ userName, updateUser, apiKey, setlatgeo , latgeo, setlonggeo, longgeo, isLoaded, setLocationName, locationName, useDistace, setdistance}}>
+    <UserContext.Provider value={{ userName, updateUser, apiKey, setlatgeo , latgeo, setlonggeo, longgeo, isLoaded, setLocationName, locationName, useDistace, setdistance, shatterbar, setshatterbar}}>
       {children}
     </UserContext.Provider>
   );

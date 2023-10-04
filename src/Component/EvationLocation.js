@@ -10,7 +10,7 @@ import iconAntenna from  './assest/antenna.png'
 import './style.css'
 import RollingCircleLoader from './RollingCircleLoader';
 const containerStyle = {
-  height: '70vh',
+  height: '100vh',
 };
 
 
@@ -19,7 +19,7 @@ const numPoints = 10; // Adjust the number of points as needed
 
 
 function EvationLocation() {
-  const { apiKey, setlatgeo, latgeo, setlonggeo, longgeo, isLoaded, setLocationName, locationName, useDistace, setdistance } = useInformation()
+  const { apiKey, setlatgeo, latgeo, setlonggeo, longgeo, isLoaded, setLocationName, locationName, useDistace, setdistance, shatterbar, setshatterbar } = useInformation()
   const [map, setMap] = useState(null);
   const [topElevations, setTopElevations] = useState([]);
   const [scannedCoordinates, setScannedCoordinates] = useState([]);
@@ -36,6 +36,8 @@ function EvationLocation() {
   const [frequency, setFrequency] = useState(743.25); // Default frequency in MHz
   const [distance, setDistance] = useState(1.0); // Default distance in kilometers
   const [pathLoss, setPathLoss] = useState(null);
+
+
 
 
 //   useEffect(()=>{
@@ -232,10 +234,16 @@ const southwest = {
   useEffect(() => {
     // Log the scanned coordinates when the component mounts
     console.log('Scanned Coordinates:', scannedCoordinates);
-    
-  }, [scannedCoordinates,checkOrdinatediff,topElevations]);
+    setshatterbar(scannedCoordinates)
+    if(topElevations.length > 0 ){
+      localStorage.setItem('populationData', JSON.stringify(topElevations));
+    }
 
+  },[]);
 
+  const savedPopulationData = localStorage.getItem('populationData');
+  const parsedPopulationData = JSON.parse(savedPopulationData);
+  console.log("saved me",parsedPopulationData)
 
   return true ? (
     <div>
@@ -276,8 +284,9 @@ const southwest = {
   <div>Total Coordinate Scanned: <span className="highlight">{scannedCoordinates.length}</span></div>
   <div>Number of Altitude to be Picked: <span className="highlight">{numTopAltitudes}</span></div>
   <div>Coverage Radius (Kms): <span className="highlight">{useDistace}</span></div>
-  <div>Bandwidth Required : <span className="highlight">0.5</span></div>
-  <div>Weighted Utility: <span className="highlight">305.85</span></div>
+  <div>Bandwidth Required : <span className="highlight">0.15</span></div>
+  <button style={{backgroundColor:'blue', padding:10, borderRadius:5}}>Scan again</button>
+
 </div>
 
       {/* <div>Total Coordinate Scanned: <span> {scannedCoordinates.length}</span></div> */}
@@ -303,7 +312,7 @@ Elevation Value
 
 
       {topElevations.length > 0 ? (
-  topElevations?.map((item, index) => {
+        topElevations?.map((item, index) => {
    
     const { elevation} = item
     const {lat, lng } = item?.coordinate
@@ -316,23 +325,24 @@ Elevation Value
           <Table.Cell> {elevation}</Table.Cell>
           <Table.Cell>      <Button onClick={()=>{ calculatePathLoss(); HandleShowModel(item, locationName, modealInfo)}}>Check</Button></Table.Cell>
           <Table.Cell>
-            <a
+            {/* <a
               className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
               href="/tables"
-            >
-              <p>
-                Edit
+            > */}
+            <Button>              <p>
+              Save
               </p>
-            </a>
+              </Button>
+
+            {/* </a> */}
           </Table.Cell>
         </Table.Row>
     );
   })
 ) : (
-  <div className='my-3 text-center ' style={{alignSelf:'center'}}>
-    Loading...
-    {/* <Button onClick={()=>{ calculatePathLoss(); HandleShowModel( locationName, modealInfo)}}>Check</Button> */}
-  </div>
+  <div className='my-3 text-center ' style={{ alignSelf: 'center', alignItems:'center' }}>
+      <div className='loader'></div>
+    </div>
 )}
 
 

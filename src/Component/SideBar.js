@@ -9,7 +9,7 @@ const SidebarPage = () => {
     return (
         <Sidebar className='' aria-label="Sidebar with logo branding example">
 
-            <p className='' style={{ fontSize: '30px', fontWeight: 'bold' }}>   Base Station   </p>
+            <p className='' style={{ fontSize: '30px', fontWeight: 'bold' }}>   TVWS Planning Tool   </p>
 
             <Sidebar.Items>
                 <Sidebar.ItemGroup>
