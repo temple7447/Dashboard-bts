@@ -1,6 +1,5 @@
 import React from 'react';
-import { VictoryScatter, VictoryChart, VictoryAxis } from 'victory';
-
+import { VictoryChart, VictoryScatter, VictoryTheme, VictoryAxis } from 'victory';
 import Loader from "react-js-loader";
 
 const MapChart = ({shatterbar, northeastp, southwestp}) => {
@@ -9,18 +8,25 @@ const MapChart = ({shatterbar, northeastp, southwestp}) => {
  
   return (
     <div style={{ width: '60%',}}>
-    {coordinates.length > 0 ?  (<VictoryChart
+    <h2 style={{textDecoration:'underline', textAlign:'center', fontSize:'2rem', lineHeight:1}}>Scatter Plot</h2>
+    {coordinates.length > 0 ?  (<VictoryChart theme={VictoryTheme.material}
         domain={{ x: [southwestp.lng,northeastp.lng], y: [ southwestp.lat, northeastp.lat] }} // Set appropriate domain based on your data
       >
-        <VictoryAxis dependentAxis />
-        <VictoryAxis />
+        <VictoryAxis 
+          style={{
+            axisLabel: { padding: 30 },
+          }} dependentAxis />
+        <VictoryAxis  
+          style={{
+            axisLabel: { padding: 40 },
+          }} />
         <VictoryScatter
           data={coordinates}
           x="lng"
           y="lat"
-          size={3} // Adjust the size of the points as needed
+          size={5} // Adjust the size of the points as needed
           style={{
-            data: { fill: '#DB8234' }, // Set the color of the points
+            data: { fill: '#35DE17' }, // Set the color of the points
           }}
         />
       </VictoryChart>)

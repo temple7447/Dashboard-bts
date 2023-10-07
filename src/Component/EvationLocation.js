@@ -230,10 +230,26 @@ const southwest = {
     setmodelcovalue(item)
     props.setOpenModal('initial-focus')
   }
+useEffect(()=>{
+  const storedArray = JSON.parse(localStorage.getItem('yourArrayKey')) || [];
+  console.log(storedArray)
+},[])
 
+  const HandleSave = async (newObj)=>{
+    const storedArray = JSON.parse(localStorage.getItem('yourArrayKey')) || [];
+  await  storedArray.push(newObj);
+   localStorage.setItem('yourArrayKey', JSON.stringify(storedArray))
+  }
 
-
-
+const HandleDelete = async (newObj)=>{
+  const storedArray = JSON.parse(localStorage.getItem('yourArrayKey')) || [];
+const indexToRemove = storedArray.findIndex(item => item.vale === newObj);
+//  localStorage.setItem('yourArrayKey', JSON.stringify(storedArray))
+if (indexToRemove !== -1) {
+  storedArray.splice(indexToRemove, 1);
+}
+localStorage.setItem('yourArrayKey', JSON.stringify(storedArray));
+}
 
   return  (
     <div>
@@ -314,7 +330,7 @@ Elevation Value
               className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
               href="/tables"
             > */}
-            <Button>              <p>
+            <Button onClick={()=> HandleSave(item)}>              <p>
               Save
               </p>
               </Button>
@@ -341,6 +357,8 @@ Elevation Value
       }
 
    <FormElements  modelcovalue={modelcovalue} locationName={locationName} props={props}/>
+{/* <button style={{backgroundColor:'green', padding:10}}  >save</button> */}
+{/* <button style={{backgroundColor:'red', padding:10}} onClick={()=> HandleDelete(5)} >delete</button> */}
     </div>
   ) 
 
