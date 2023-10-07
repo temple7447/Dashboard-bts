@@ -14,6 +14,7 @@ import './style.css'
 import { AiOutlineSearch } from 'react-icons/ai';
 // import Boxes from './Boxes';
 import Freespace from './Freespace';
+import Tables from './Tables';
 
 const containerStyle = {
 
@@ -110,8 +111,6 @@ function DashbboardHomemain() {
   const [map, setMap] = useState(null);
   const [clickedLocation, setClickedLocation] = useState(null);
   const [elevation, setElevation] = useState(null);
-
-
 
 
   const handleGeocodeClick = () => {
@@ -257,7 +256,10 @@ function DashbboardHomemain() {
   
 
       {/* <BarChart /> */}
+      <div className='flex flex-row'>
       <MapChart northeastp={northeastp} southwestp={southwestp} shatterbar={shatterbar} />
+      <Tables />
+      </div>
 
       {/* <GoogleMap
         mapContainerStyle={containerStyle}
