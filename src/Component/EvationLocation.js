@@ -8,9 +8,10 @@ import population from "./Population";
 import FormElements from './Model';
 import iconAntenna from  './assest/antenna.png'
 import './style.css'
+import Loader from "react-js-loader";
 import RollingCircleLoader from './RollingCircleLoader';
 const containerStyle = {
-  height: '100vh',
+  height: '90vh',
 };
 
 
@@ -19,10 +20,10 @@ const numPoints = 10; // Adjust the number of points as needed
 
 
 function EvationLocation() {
-  const { apiKey, setlatgeo, latgeo, setlonggeo, longgeo, isLoaded, setLocationName, locationName, useDistace, setdistance, shatterbar, setshatterbar } = useInformation()
+  const {scanagain, setScanAgain,northeastp,setnortheast,setsouthwest,southwestp, apiKey, setlatgeo, latgeo, setlonggeo, longgeo, isLoaded, setLocationName, locationName, useDistace, setdistance, shatterbar, setshatterbar,scannedCoordinates, setScannedCoordinates } = useInformation()
   const [map, setMap] = useState(null);
   const [topElevations, setTopElevations] = useState([]);
-  const [scannedCoordinates, setScannedCoordinates] = useState([]);
+
   const [checkOrdinatediff, setCheckOrdinatediff]  = useState(0.05)
   const [openModal, setOpenModal] = useState();
   const [countpopulation, setcountpopulation] = useState()
@@ -136,12 +137,15 @@ const southwest = {
 };
 
 
+
   const northeast = {
     lat: validLat - checkOrdinatediff,  // Adjust these values for your desired range
     lng: validLng - checkOrdinatediff 
   };
-
+ 
   useEffect(() => {
+    setnortheast(southwest)
+    setsouthwest(northeast)
     if (isLoaded && map ) {
       const latStep = (northeast.lat - southwest.lat) / numPoints;
       const lngStep = (northeast.lng - southwest.lng) / numPoints;
@@ -202,12 +206,14 @@ const southwest = {
       findTopElevations()
         .then((topElevations) => {
           setTopElevations(topElevations);
+          setshatterbar(topElevations)
+          setScanAgain(false)
         })
         .catch((error) => {
           console.error('Error fetching elevations:');
         });
     }
-  }, [isLoaded, map, numTopAltitudes, useDistace]);
+  }, [isLoaded, map, numTopAltitudes, useDistace, scanagain]);
 
   const onLoad = (map) => {
    
@@ -226,28 +232,13 @@ const southwest = {
   }
 
 
-  // useEffect(()=>{
-  //   console.log("selected Value", topElevations)
-  //   console.log("selected Value check", checkOrdinate)
-  // },[])
 
-  useEffect(() => {
-    // Log the scanned coordinates when the component mounts
-    console.log('Scanned Coordinates:', scannedCoordinates);
-    setshatterbar(scannedCoordinates)
-    if(topElevations.length > 0 ){
-      localStorage.setItem('populationData', JSON.stringify(topElevations));
-    }
 
-  },[]);
 
-  const savedPopulationData = localStorage.getItem('populationData');
-  const parsedPopulationData = JSON.parse(savedPopulationData);
-  console.log("saved me",parsedPopulationData)
-
-  return true ? (
+  return  (
     <div>
-      <GoogleMap
+  
+         <GoogleMap
         mapContainerStyle={containerStyle}
         center={southwest} // Set the center to the southwest corner of the range
         zoom={10} // Adjust the initial zoom level as needed
@@ -275,22 +266,15 @@ const southwest = {
             />
           </React.Fragment>
         ))}
-
+     
       </GoogleMap>
-      <div className="info-container">
-      {name}
 
 
-  <div>Total Coordinate Scanned: <span className="highlight">{scannedCoordinates.length}</span></div>
-  <div>Number of Altitude to be Picked: <span className="highlight">{numTopAltitudes}</span></div>
-  <div>Coverage Radius (Kms): <span className="highlight">{useDistace}</span></div>
-  <div>Bandwidth Required : <span className="highlight">0.15</span></div>
-  <button style={{backgroundColor:'blue', padding:10, borderRadius:5}}>Scan again</button>
+ 
 
-</div>
 
-      {/* <div>Total Coordinate Scanned: <span> {scannedCoordinates.length}</span></div> */}
-      <div>
+      {
+        topElevations.length > 0 ? (      <div>
       <Table striped>
       <Table.Head>
         <Table.HeadCell>
@@ -311,7 +295,8 @@ Elevation Value
       <Table.Body className="divide-y">
 
 
-      {topElevations.length > 0 ? (
+      { 
+
         topElevations?.map((item, index) => {
    
     const { elevation} = item
@@ -339,27 +324,26 @@ Elevation Value
         </Table.Row>
     );
   })
-) : (
-  <div className='my-3 text-center ' style={{ alignSelf: 'center', alignItems:'center' }}>
-      <div className='loader'></div>
-    </div>
-)}
+}
 
 
-  
  
  
  
       </Table.Body>
     </Table>
-</div>
+</div>): (
+  <div className='my-3 text-center ' style={{ alignSelf: 'center', alignItems:'center',  }}>
+  <Loader type="box-rectangular"  bgColor={"#090909"} title={"box-rectangular"} color={'#FFFFFF'} size={100} />
+    </div>
+  
+)
+      }
+
    <FormElements  modelcovalue={modelcovalue} locationName={locationName} props={props}/>
     </div>
-  ) : (
-    <div >
-    <RollingCircleLoader />
-    </div>
-  );
+  ) 
+
 }
 
 export default EvationLocation

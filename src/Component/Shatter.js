@@ -1,29 +1,33 @@
 import React from 'react';
 import { VictoryScatter, VictoryChart, VictoryAxis } from 'victory';
 
-const data = [
-  { lat: 7.160653, lng: 6.338584 },
-  // ... add more data points
-];
+import Loader from "react-js-loader";
 
-const MapChart = ({shatterbar}) => {
+const MapChart = ({shatterbar, northeastp, southwestp}) => {
+  const coordinates = shatterbar.map(item => item.coordinate);
+  
+ 
   return (
-    <div style={{ width: '80%', margin: '0 auto' }}>
-      <VictoryChart
-        domain={{ x: [6, 7], y: [6, 7] }} // Set appropriate domain based on your data
+    <div style={{ width: '60%',}}>
+    {coordinates.length > 0 ?  (<VictoryChart
+        domain={{ x: [southwestp.lng,northeastp.lng], y: [ southwestp.lat, northeastp.lat] }} // Set appropriate domain based on your data
       >
         <VictoryAxis dependentAxis />
         <VictoryAxis />
         <VictoryScatter
-          data={shatterbar}
+          data={coordinates}
           x="lng"
           y="lat"
-          size={5} // Adjust the size of the points as needed
+          size={3} // Adjust the size of the points as needed
           style={{
-            data: { fill: '#3498db' }, // Set the color of the points
+            data: { fill: '#DB8234' }, // Set the color of the points
           }}
         />
-      </VictoryChart>
+      </VictoryChart>)
+      :  <Loader type="hourglass" bgColor={"#FFFFFF"} title={"loading"} color={'#FFFFFF'} size={100} />
+      }
+      
+      
     </div>
   );
 };

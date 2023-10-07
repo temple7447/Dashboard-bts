@@ -1,50 +1,42 @@
+'use client';
 import React, { useState, useEffect } from 'react';
 import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
 import { useInformation } from '../Provider'
 import {  useNavigate } from 'react-router-dom';
 import app from '../firebase';
-import { getDatabase, ref, set } from "firebase/database";
-import { Alert } from 'flowbite-react';
+import { getDatabase, ref, set,get } from "firebase/database";
+import { Alert,Avatar  } from 'flowbite-react';
 import RollingCircleLoader from './RollingCircleLoader';
 import BarChart from './Chart';
 import MapChart from './Shatter';
-
+import imageimage from './assest/satellite2.png'
+import './style.css'
+import { AiOutlineSearch } from 'react-icons/ai';
+// import Boxes from './Boxes';
+import Freespace from './Freespace';
 
 const containerStyle = {
 
-  height: '90vh',
+  height: '30vh',
+  width:'30vw',
+
 
 };
 
-function getElevation(location) {
-  return new Promise((resolve, reject) => {
-    const elevator = new window.google.maps.ElevationService();
-
-    const locationRequest = {
-      locations: [location],
-    };
-
-    elevator.getElevationForLocations(locationRequest, (results, status) => {
-      if (status === 'OK' && results && results.length > 0) {
-        resolve(results[0].elevation);
-      } else {
-        reject(status);
-      }
-    });
-  });
-}
 
 
 function DashbboardHomemain() {
 
-  const  { apiKey, setlatgeo , latgeo, setlonggeo, longgeo,isLoaded, setLocationName, locationName, shatterbar, setshatterbar} = useInformation()
+  const  {northeastp, southwestp ,apiKey, setlatgeo , latgeo, setlonggeo, longgeo,isLoaded, setLocationName, locationName, shatterbar, setshatterbar, useDistace,scannedCoordinates, setScannedCoordinates} = useInformation()
 
   const [Iteration, setIteration] = useState('');
   const [coordinate, setCoordinate] = useState('');
   const [alertme, setAlertme] = useState(false);
   const [alertmesuc, setAlertmesuc] = useState(false);
   const [alertmesuca, setAlertmesuca] = useState(false);
+  const [numTopAltitudes, setnumTopAltitudes] = useState(null)
 
+  const apiUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${locationName}&key=${apiKey}`;
 
   const writeUserData = (userId) => {
     if (Iteration && coordinate) {
@@ -75,65 +67,73 @@ function DashbboardHomemain() {
     }
   };
 
+
+
+
+  useEffect(()=>{
+    function readUserData(userId) {
+      const db = getDatabase();
+      const userRef = ref(db, 'ElevationChanges/' + userId);
+    
+      // Use the `get` function to retrieve data from the specified reference
+      get(userRef)
+        .then((snapshot) => {
+          if (snapshot.exists()) {
+            const userData = snapshot.val();
+            console.log('Data retrieved:',  userData.Iteration);
+            // console.log('Data retrieved:', userData.coordinate);
+            const iterationAsInt = parseInt(userData.Iteration, 10); 
+            // const coordinateAsFloat = parseInt(userData.coordinate, 10); 
+          setnumTopAltitudes(iterationAsInt)
+         
+     
+          } else {
+            console.log('No data available');
+          }
+        })
+        .catch((error) => {
+          console.error('Error reading data:', error);
+        });
+    }
+    readUserData("BTS");
+  },[ numTopAltitudes, useDistace ])
+
   const handleWarningDismiss = () => setAlertme(false);
   const handleSuccessDismiss = () => setAlertmesuc(false);
   const handleSuccessDismissa = () => setAlertmesuca(false);
 
 
+
   const navigate = useNavigate();
 
-    const center = {
-        lat: latgeo || 6.4,
-        lng:  longgeo || 7.149430399999999
-      };
-//   const { isLoaded } = useJsApiLoader({
-//     id: 'google-map-script',
-//     googleMapsApiKey: "AIzaSyAwjwRWC6rksF7GnJVyx6-b_hspjvWuI3Y"
-//   });
-
+  
   const [map, setMap] = useState(null);
   const [clickedLocation, setClickedLocation] = useState(null);
   const [elevation, setElevation] = useState(null);
 
-    useEffect(() => {
-    if (isLoaded && map) {
-      getElevation(center)
-        .then((elevationData) => {
-          setElevation(elevationData);
-        })
-        .catch((error) => {
-          console.error('Error fetching elevation:', error);
-        });
-    }
-  }, [isLoaded, map, locationName]);
 
-  const onLoad = React.useCallback(function callback(map) {
-    const bounds = new window.google.maps.LatLngBounds(center);
-    map.fitBounds(bounds);
-    setMap(map);
-  }, []);
 
-  const onUnmount = React.useCallback(function callback() {
-    setMap(null);
-  }, []);
 
   const handleGeocodeClick = () => {
 
-    if (map && locationName) {
-      const geocoder = new window.google.maps.Geocoder();
-      geocoder.geocode({ address: locationName }, (results, status) => {
-        if (status === 'OK' && results.length > 0) {
-        
-          const { lat, lng } = results[0].geometry.location;
-          console.log(`Coordinates for "${locationName}": Latitude ${lat()}, Longitude ${lng()}`);
-          setlatgeo(lat())
-          setlonggeo(lng())
-          setClickedLocation({ lat: lat(), lng: lng() }); // Use lat() and lng() functions
-        } else {
-          console.error('Geocode was not successful for the following reason:', status);
-        }
-      });
-    }
+    fetch(apiUrl)
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.results && data.results.length > 0) {
+        const { lat, lng } = data.results[0].geometry.location;
+        console.log(`Coordinates for "${locationName}": Latitude ${lat}, Longitude ${lng}`);
+        setlatgeo(lat)
+        setlonggeo(lng)
+        setClickedLocation({ lat: lat, lng: lng });
+      } else {
+        // Handle no results found
+        console.error('No results found for the given location.');
+      }
+    })
+    .catch((error) => {
+      // Handle error from API request
+      console.error('Error fetching data:', error);
+    });
     setLocationName('')
     setAlertmesuca(true);
     setTimeout(() => {
@@ -141,18 +141,14 @@ function DashbboardHomemain() {
     }, 4000);
    
   };
+ 
 
-  const handleMapClick = (e) => {
-    const { latLng } = e;
-    setClickedLocation({ lat: latLng.lat(), lng: latLng.lng() });
-    console.log(`Coordinates for clicked location: Latitude ${latLng.lat()}, Longitude ${latLng.lng()}`);
-  };
-
-  return isLoaded ? (
-    <div>
-      <div className='mx-5'>
-      {alertmesuca && (
-          <Alert color="success" onDismiss={handleSuccessDismissa}>
+  return  isLoaded ? (
+    <div className='bodyimage' style={{}}>
+   
+    <div className='flex flex-row px-4' style={{height:'100%', width:'100%', justifyContent:'space-between',backgroundColor:"#ffffffff", alignItems:'center' }}>
+    {alertmesuca && (
+          <Alert style={{position:'absolute', }} color="success" onDismiss={handleSuccessDismissa}>
             <span>
               <p>
                 <span className="font-medium">Success alert!</span>
@@ -161,18 +157,22 @@ function DashbboardHomemain() {
             </span>
           </Alert>
         )}
-        <input
-        className='my-3 rounded-2xl w-96'
+    <div>
+   
+    <AiOutlineSearch  style={{position:'absolute', fontSize:'30px', top:20}}/>
+   
+    <input
+        className='my-3  w-30 placeh'
           type="text"
           placeholder="Enter location name"
           value={locationName}
           onChange={(e) => setLocationName(e.target.value)}
         />
-        <button style={{backgroundColor:'blue', padding:10,borderRadius:5}} className='mx-3' onClick={handleGeocodeClick}>Get location</button>
-
-        <div>
+              <button style={{backgroundColor:'#3C74CE6C', padding:10,borderRadius:2, color:'white'}} className='mx-3' onClick={handleGeocodeClick}>Get location</button>
+    </div>
+    <div className='flex flex-row ' style={{alignItems:'center', gap:10}} >
         {alertme && (
-          <Alert color="warning" onDismiss={handleWarningDismiss}>
+          <Alert color="warning" style={{position:'absolute', }}  onDismiss={handleWarningDismiss}>
             <span>
               <p>
                 <span className="font-medium">Warning alert!</span>
@@ -182,7 +182,7 @@ function DashbboardHomemain() {
           </Alert>
         )}
         {alertmesuc && (
-          <Alert color="success" onDismiss={handleSuccessDismiss}>
+          <Alert className='' style={{position:'absolute'}} color="success" onDismiss={handleSuccessDismiss}>
             <span>
               <p>
                 <span className="font-medium">Success alert!</span>
@@ -191,24 +191,25 @@ function DashbboardHomemain() {
             </span>
           </Alert>
         )}
-        <div>Elevation Value Changes</div>
-        <div className='my-5'>
-          <label htmlFor='number'>Number of Elevation</label>
+
+        <div >
+
           <input
             value={Iteration}
             placeholder='Default coordinate diff is 0'
             onChange={(e) => setIteration(e.target.value)}
-            style={{ height: '30px', borderRadius: 5, width: '50vw' }}
+          
             type="number"
             step="any"
             required
+            className='my-3  w-30 placeh'
           />
         </div>
         <div>
-          <label htmlFor='number'>Coordinate difference</label>
           <input
+                  className='my-3  w-30 placeh'
             value={coordinate}
-            style={{ height: '30px', borderRadius: 5, width: '50vw' }}
+           
             type="number"
             step="any"
             placeholder='Default coordinate diff is 0.05'
@@ -224,10 +225,61 @@ function DashbboardHomemain() {
           Save Changes
         </button>
       </div>
-      </div>
+<div> <Avatar
+        alt="avatar of Jese"
+        img={imageimage}
+        rounded
+      />
+</div>
+    </div>
+   
+      {/* <Boxes /> */}
+      <div className='gap-2 flex flex-row justify-around my-5' > 
+      <div className="info-container mx-10" >
+  <div>Total Coordinate Scanned: <span className="highlight">{scannedCoordinates.length}</span></div>
+  <div>Number of Altitude to be Picked: <span className="highlight">{numTopAltitudes}</span></div>
+  <div>Coverage Radius (Kms): <span className="highlight">{useDistace}</span></div>
+  <div>Bandwidth Required : <span className="highlight">0.15</span></div>
+</div>
+<div className='p-3 ' style={{backgroundColor:'white', borderRadius:5,width:400 }}>
+<div style={{textAlign:'center'}}>Types of Model</div>
+<div>
+  <div>Modified Free Space</div>
+  <div>Modified Hata Model ITV</div>
+  <div>Egli Model EBS</div>
+  <div>Egli Model ITV</div>
+</div>
+</div>
+</div>
 
-      <BarChart />
-      <MapChart shatterbar={shatterbar} />
+
+
+  
+
+      {/* <BarChart /> */}
+      <MapChart northeastp={northeastp} southwestp={southwestp} shatterbar={shatterbar} />
+
+      {/* <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={center}
+        zoom={14}
+        onLoad={onLoad}
+        onUnmount={onUnmount}
+        onClick={handleMapClick}
+        mapTypeId="satellite"
+      >
+        {clickedLocation && (
+          <Marker
+            position={clickedLocation}
+            title={`Clicked Location`}
+           
+          />
+        )}
+      </GoogleMap> */}
+
+
+
+
     </div>
   ) : <RollingCircleLoader />;
 }
