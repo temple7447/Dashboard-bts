@@ -195,7 +195,7 @@ function DashbboardHomemain() {
 
           <input
             value={Iteration}
-            placeholder='Default coordinate diff is 0'
+            placeholder='Enter numbers of elevation'
             onChange={(e) => setIteration(e.target.value)}
           
             type="number"
