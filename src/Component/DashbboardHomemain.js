@@ -5,9 +5,10 @@ import { useInformation } from '../Provider'
 import {  useNavigate } from 'react-router-dom';
 import app from '../firebase';
 import { getDatabase, ref, set,get } from "firebase/database";
-import { Alert,Avatar  } from 'flowbite-react';
+import { Alert,Avatar ,Button ,Modal} from 'flowbite-react';
 import RollingCircleLoader from './RollingCircleLoader';
 import BarChart from './Chart';
+
 import MapChart from './Shatter';
 import imageimage from './assest/satellite2.png'
 import './style.css'
@@ -15,6 +16,7 @@ import { AiOutlineSearch } from 'react-icons/ai';
 // import Boxes from './Boxes';
 import Freespace from './Freespace';
 import Tables from './Tables';
+import ScannedTable from './ScannedTable';
 
 const containerStyle = {
 
@@ -27,7 +29,8 @@ const containerStyle = {
 
 
 function DashbboardHomemain() {
-
+  const [openModal, setOpenModal] = useState();
+  const props = { openModal, setOpenModal };
   const  {northeastp, southwestp ,apiKey, setlatgeo , latgeo, setlonggeo, longgeo,isLoaded, setLocationName, locationName, shatterbar, setshatterbar, useDistace,scannedCoordinates, setScannedCoordinates} = useInformation()
 
   const [Iteration, setIteration] = useState('');
@@ -103,7 +106,9 @@ function DashbboardHomemain() {
   const handleSuccessDismiss = () => setAlertmesuc(false);
   const handleSuccessDismissa = () => setAlertmesuca(false);
 
-
+const  handleScannedCoordinates = ()=>{
+  props.setOpenModal('default')
+}
 
   const navigate = useNavigate();
 
@@ -133,7 +138,7 @@ function DashbboardHomemain() {
       // Handle error from API request
       console.error('Error fetching data:', error);
     });
-    setLocationName('')
+   
     setAlertmesuca(true);
     setTimeout(() => {
       setAlertmesuca(false);
@@ -235,7 +240,26 @@ function DashbboardHomemain() {
       {/* <Boxes /> */}
       <div className='gap-2 flex flex-row justify-around my-5' > 
       <div className="info-container mx-10" >
-  <div>Total Coordinate Scanned: <span className="highlight">{scannedCoordinates.length}</span></div>
+  <div>Total Coordinate Scanned: <span className="highlight">{scannedCoordinates.length}
+  <>
+      <Button onClick={() => handleScannedCoordinates()}>Scan coordinates</Button>
+      <Modal show={props.openModal === 'default'} onClose={() => props.setOpenModal(undefined)}>
+        <Modal.Header>Total Scanned Coordinates</Modal.Header>
+        <Modal.Body>
+          <div className="space-y-6">
+        <ScannedTable scannedCoordinates={scannedCoordinates} />
+         
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={() => props.setOpenModal(undefined)}>I accept</Button>
+          <Button color="gray" onClick={() => props.setOpenModal(undefined)}>
+            Decline
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
+    </span></div>
   <div>Number of Altitude to be Picked: <span className="highlight">{numTopAltitudes}</span></div>
   <div>Coverage Radius (Kms): <span className="highlight">{useDistace}</span></div>
   <div>Bandwidth Required : <span className="highlight">0.15</span></div>
@@ -278,6 +302,16 @@ function DashbboardHomemain() {
           />
         )}
       </GoogleMap> */}
+
+
+
+
+
+
+ 
+
+
+
 
 
 

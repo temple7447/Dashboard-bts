@@ -13,10 +13,13 @@ const MapChart = ({shatterbar, northeastp, southwestp}) => {
         domain={{ x: [southwestp.lng,northeastp.lng], y: [ southwestp.lat, northeastp.lat] }} // Set appropriate domain based on your data
       >
         <VictoryAxis 
+        label="Latitude" 
           style={{
+            
             axisLabel: { padding: 30 },
           }} dependentAxis />
         <VictoryAxis  
+          label="Longitude" 
           style={{
             axisLabel: { padding: 40 },
           }} />

@@ -220,6 +220,9 @@ const southwest = {
     setMap(map);
   };
 
+
+
+
   const onUnmount = () => {
     setMap(null);
   };
@@ -236,20 +239,14 @@ useEffect(()=>{
 },[])
 
   const HandleSave = async (newObj)=>{
+    newObj.name = locationName;
+    
     const storedArray = JSON.parse(localStorage.getItem('yourArrayKey')) || [];
   await  storedArray.push(newObj);
    localStorage.setItem('yourArrayKey', JSON.stringify(storedArray))
   }
 
-const HandleDelete = async (newObj)=>{
-  const storedArray = JSON.parse(localStorage.getItem('yourArrayKey')) || [];
-const indexToRemove = storedArray.findIndex(item => item.vale === newObj);
-//  localStorage.setItem('yourArrayKey', JSON.stringify(storedArray))
-if (indexToRemove !== -1) {
-  storedArray.splice(indexToRemove, 1);
-}
-localStorage.setItem('yourArrayKey', JSON.stringify(storedArray));
-}
+
 
   return  (
     <div>

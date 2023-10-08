@@ -6,6 +6,7 @@ import { NavLink } from 'react-router-dom'
 import imagelogo  from '../Component/assest/satelite1.png'
 import { useInformation } from '../Provider'
 
+
 const SidebarPage = () => {
   const {scanagain, setScanAgain,northeastp,setnortheast,setsouthwest,southwestp, apiKey, setlatgeo, latgeo, setlonggeo, longgeo, isLoaded, setLocationName, locationName, useDistace, setdistance, shatterbar, setshatterbar,scannedCoordinates, setScannedCoordinates } = useInformation()
 
@@ -31,11 +32,12 @@ const SidebarPage = () => {
                             <p>   Elevation Coordinates   </p>
                         </Sidebar.Item>
                     </NavLink>
-               
-                    {/* <button disabled={scanagain} onClick={()=> setScanAgain(pre => !pre) }  style={{backgroundColor:'blue', padding:10, borderRadius:5}}>Scan again</button> */}
-
+ 
                 </Sidebar.ItemGroup>
             </Sidebar.Items>
+        
+
+
    
         </Sidebar>
 
