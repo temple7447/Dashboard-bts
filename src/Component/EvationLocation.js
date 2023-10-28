@@ -11,6 +11,8 @@ import './style.css'
 import Loader from "react-js-loader";
 import RollingCircleLoader from './RollingCircleLoader';
 import HataModel from './Convertional/HataModel';
+import FreeSpaceModel from './Convertional/FreeSpaceModel';
+import EgliModel from './Convertional/EgliModel';
 const containerStyle = {
   height: '90vh',
 };
@@ -356,6 +358,8 @@ Elevation Value
 
    <FormElements  modelcovalue={modelcovalue} locationName={locationName} props={props}/>
    <HataModel />
+   <FreeSpaceModel />
+   <EgliModel />
 {/* <button style={{backgroundColor:'green', padding:10}}  >save</button> */}
 {/* <button style={{backgroundColor:'red', padding:10}} onClick={()=> HandleDelete(5)} >delete</button> */}
     </div>

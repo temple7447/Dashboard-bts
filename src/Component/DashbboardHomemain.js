@@ -264,13 +264,24 @@ const  handleScannedCoordinates = ()=>{
   <div>Coverage Radius (Kms): <span className="highlight">{useDistace}</span></div>
   <div>Bandwidth Required : <span className="highlight">0.15</span></div>
 </div>
-<div className='p-3 ' style={{backgroundColor:'white', borderRadius:5,width:400 }}>
-<div style={{textAlign:'center'}}>Types of Model</div>
+<div className='p-3 ' style={{backgroundColor:'white', borderRadius:5,width:300 }}>
+<div style={{textAlign:'center'}}>Empirical Model</div>
 <div>
   <div>Modified Free Space</div>
   <div>Modified Hata Model ITV</div>
   <div>Egli Model EBS</div>
   <div>Egli Model ITV</div>
+</div>
+</div>
+
+<div className='p-3 ' style={{backgroundColor:'white', borderRadius:5,width:300 }}>
+<div style={{textAlign:'center'}}>Convertional Model</div>
+<div>
+<ol>
+  <li>Free Space</li>
+  <li>Hata Model</li>
+  <li>Egli Model </li>
+  </ol>
 </div>
 </div>
 </div>

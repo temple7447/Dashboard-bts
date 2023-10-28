@@ -6,7 +6,7 @@ const HataModel = () => {
 
   const {useDistace, setdistance} = useInformation()
 
-  const [distance, setDistance] = useState('');
+  const [distance, setDistance] = useState(0);
   const [result, setResult] = useState(null);
 const [alertme, setalertme] = useState(false)
 const [alertmesuc, setalertmesuc] = useState(false)
@@ -27,26 +27,21 @@ const [frequency,setfrequency] = useState(0)
    
   }
 
+
+
   const handles = () => setalertmesuc(false);
   const handlew = () => setalertme(false);
 
-
   const calculateHataPathLoss = () => {
     const log10 = Math.log10;
-    const fMHz = 479.25;
-    const ht = 3048;
-    const hr = 1.5;
     const dKm = parseFloat(distance);
+    const fMz = parseFloat(frequency)
+    const ht = parseFloat(htvalue)
+    const hr = parseFloat(hrvalue)
 
-    if (!isNaN(dKm)) {
-      const aHr = 3.2;
-      const pathLoss =
-        67.89 +
-        26.16 * log10(fMHz) -
-        13.82 * log10(ht) -
-        aHr * log10(11.75 * hr) * log10(11.75 * hr) -
-        4.97 +
-        (44.9 - 6.55 * log10(ht)) * log10(dKm);
+    if (!isNaN(dKm) && !isNaN(fMz) && !isNaN(hr) &&  !isNaN(ht)) {
+      const pathLoss = 69.55 + 26.16*log10(fMz) - 13.82 * log10(ht) - 3.2 * (log10(11.75 * hr)) ** 2 - 4.97 + 44.9 - 6.55 * log10(hr) 
+       
 
       setResult(pathLoss);
     } else {
@@ -94,11 +89,11 @@ const [frequency,setfrequency] = useState(0)
           />
         </div>
         <div className="form-group flex flex-row items-center">
-          <label>Frequency:</label>
+          <label>Frequency F(Mhz):</label>
           <input
            type="number"
-            value={distance}
-            onChange={(e) => setDistance(e.target.value)}
+            value={frequency}
+            onChange={(e) => setfrequency(e.target.value)}
             style={{width:100}}
           />
         </div>
@@ -106,8 +101,8 @@ const [frequency,setfrequency] = useState(0)
           <label>Height of Receiver(km):</label>
           <input
            type="number"
-            value={distance}
-            onChange={(e) => setDistance(e.target.value)}
+            value={hrvalue}
+            onChange={(e) => sethrvalue(e.target.value)}
             style={{width:100}}
           />
         </div>
@@ -115,8 +110,8 @@ const [frequency,setfrequency] = useState(0)
           <label>Height of Transmitter(km):</label>
           <input
            type="number"
-            value={distance}
-            onChange={(e) => setDistance(e.target.value)}
+            value={htvalue}
+            onChange={(e) => sethtvalue(e.target.value)}
             style={{width:100}}
           />
         </div>
