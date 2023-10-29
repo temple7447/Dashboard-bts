@@ -40,7 +40,7 @@ const [frequency,setfrequency] = useState(0)
     const hr = parseFloat(hrvalue)
 
     if (!isNaN(dKm) && !isNaN(fMz) && !isNaN(hr) &&  !isNaN(ht)) {
-      const pathLoss = 69.55 + 26.16*log10(fMz) - 13.82 * log10(ht) - 3.2 * (log10(11.75 * hr)) ** 2 - 4.97 + 44.9 - 6.55 * log10(hr) 
+      const pathLoss = 69.55 + 26.16*log10(fMz) - 13.82 * log10(ht) - 3.2 * (log10(11.75 * hr)) ** 2 - (4.97 + 44.9 - 6.55 * log10(hr)) * log10(dKm) 
        
 
       setResult(pathLoss);

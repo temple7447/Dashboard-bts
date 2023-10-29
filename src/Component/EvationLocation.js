@@ -357,9 +357,9 @@ Elevation Value
       }
 
    <FormElements  modelcovalue={modelcovalue} locationName={locationName} props={props}/>
-   <HataModel />
+   {/* <HataModel />
    <FreeSpaceModel />
-   <EgliModel />
+   <EgliModel /> */}
 {/* <button style={{backgroundColor:'green', padding:10}}  >save</button> */}
 {/* <button style={{backgroundColor:'red', padding:10}} onClick={()=> HandleDelete(5)} >delete</button> */}
     </div>
