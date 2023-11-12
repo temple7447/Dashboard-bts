@@ -35,7 +35,7 @@ const handlew = () => setalertme(false);
     const Dkm = parseFloat(distance);
     const ht = 228.6; // in meters
     const hr = 1.5; // in meters
-
+    
     if (!isNaN(Dkm)) {
       const logResult = 40 * Math.log10(Dkm) - 20 * Math.log10(ht) - 10 * Math.log10(hr);
       setResult(logResult);

@@ -9,7 +9,7 @@ const BarChart = () => {
     { label: 'Label 4', value: 5 },
     { label: 'Label 5', value: 2 },
   ];
-
+  
   return (
     <div style={{ width: '50%', alignSelf:'flex-start', }}>
       <VictoryChart
