@@ -286,7 +286,7 @@ const  handleScannedCoordinates = ()=>{
            
             type="text"
             step="any"
-            placeholder='Default coordinate diff is 0.05'
+            placeholder='Enter of Place'
             onChange={(e) => setpopulationPlace(e.target.value)}
             required
           />
@@ -296,7 +296,7 @@ const  handleScannedCoordinates = ()=>{
            
             type="number"
             step="any"
-            placeholder='Default coordinate diff is 0.05'
+            placeholder='Enter Population number'
             onChange={(e) => setPopulationNum(e.target.value)}
             required
           />
@@ -347,7 +347,7 @@ const  handleScannedCoordinates = ()=>{
 </div>
 
 <div className='p-3 ' style={{backgroundColor:'white', borderRadius:5,width:300 }}>
-<div style={{textAlign:'center'}}>Convertional Model</div>
+<div style={{textAlign:'center'}}>Theoritical models Model</div>
 <div>
 <ol>
   <li>Free Space</li>
