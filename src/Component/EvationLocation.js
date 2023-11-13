@@ -13,6 +13,11 @@ import RollingCircleLoader from './RollingCircleLoader';
 import HataModel from './Convertional/HataModel';
 import FreeSpaceModel from './Convertional/FreeSpaceModel';
 import EgliModel from './Convertional/EgliModel';
+import Utilityfunction from './testsite/Utilityfunction';
+import Throughput from './testsite/Throughput';
+import WeightUtility from './testsite/WeightUtility';
+import Models from './testsite/Model';
+import ConversionalModal from './Convertional/ConversionalModal';
 const containerStyle = {
   height: '90vh',
 };
@@ -307,6 +312,8 @@ Elevation Value
         </Table.HeadCell>
         <Table.HeadCell> Order </Table.HeadCell>
         <Table.HeadCell>Result</Table.HeadCell>
+        <Table.HeadCell>Result</Table.HeadCell>
+        <Table.HeadCell>Result</Table.HeadCell>
       </Table.Head>
       <Table.Body className="divide-y">
 
@@ -325,6 +332,8 @@ Elevation Value
           <Table.Cell>  {lat}  </Table.Cell>
           <Table.Cell> {elevation}</Table.Cell>
           <Table.Cell>      <Button onClick={()=>{ calculatePathLoss(); HandleShowModel(item, locationName, modealInfo)}}>Check</Button></Table.Cell>
+          <Table.Cell>      <Models /></Table.Cell>
+          <Table.Cell>   <ConversionalModal />   </Table.Cell>
           <Table.Cell>
             {/* <a
               className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
@@ -356,12 +365,10 @@ Elevation Value
 )
       }
 
-   <FormElements  modelcovalue={modelcovalue} locationName={locationName} props={props}/>
-   {/* <HataModel />
-   <FreeSpaceModel />
-   <EgliModel /> */}
-{/* <button style={{backgroundColor:'green', padding:10}}  >save</button> */}
-{/* <button style={{backgroundColor:'red', padding:10}} onClick={()=> HandleDelete(5)} >delete</button> */}
+   {/* <FormElements  modelcovalue={modelcovalue} locationName={locationName} props={props}/> */}
+ 
+
+
     </div>
   ) 
 

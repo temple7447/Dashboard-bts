@@ -8,15 +8,16 @@ import { getDatabase, ref, set,get } from "firebase/database";
 import { Alert,Avatar ,Button ,Modal} from 'flowbite-react';
 import RollingCircleLoader from './RollingCircleLoader';
 import BarChart from './Chart';
-
+import axios from 'axios';
 import MapChart from './Shatter';
 import imageimage from './assest/satellite2.png'
 import './style.css'
 import { AiOutlineSearch } from 'react-icons/ai';
-// import Boxes from './Boxes';
 import Freespace from './Freespace';
 import Tables from './Tables';
 import ScannedTable from './ScannedTable';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const containerStyle = {
 
@@ -39,6 +40,9 @@ function DashbboardHomemain() {
   const [alertmesuc, setAlertmesuc] = useState(false);
   const [alertmesuca, setAlertmesuca] = useState(false);
   const [numTopAltitudes, setnumTopAltitudes] = useState(null)
+  const [populationNum, setPopulationNum] = useState(0)
+  const [populationPlace, setpopulationPlace] = useState('')
+
 
   const apiUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${locationName}&key=${apiKey}`;
 
@@ -105,6 +109,43 @@ function DashbboardHomemain() {
   const handleWarningDismiss = () => setAlertme(false);
   const handleSuccessDismiss = () => setAlertmesuc(false);
   const handleSuccessDismissa = () => setAlertmesuca(false);
+
+  const HandleSubmitBackend = ()=>{
+
+    axios.post("https://bts-backend.onrender.com/population", {populationNum, populationPlace})
+.then((res)=>{
+  console.log(res.data.mgs)
+  toast.success(`${res.data.mgs}`, {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+    });
+setpopulationPlace('')
+setPopulationNum(0)
+})
+.catch((err)=>{
+  console.log(err)
+  toast.error(`${err.response.data.mgs}`, {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+    });
+    setpopulationPlace('')
+setPopulationNum(0)
+})
+
+  }
+
 
 const  handleScannedCoordinates = ()=>{
   props.setOpenModal('default')
@@ -236,8 +277,39 @@ const  handleScannedCoordinates = ()=>{
       />
 </div>
     </div>
-   
-      {/* <Boxes /> */}
+    
+
+    <div style={{display:'flex', flexDirection:'row', gap:20}}>
+          <input
+                  className='my-3  w-30 placeh'
+            value={populationPlace}
+           
+            type="text"
+            step="any"
+            placeholder='Default coordinate diff is 0.05'
+            onChange={(e) => setpopulationPlace(e.target.value)}
+            required
+          />
+          <input
+                  className='my-3  w-30 placeh'
+            value={populationNum}
+           
+            type="number"
+            step="any"
+            placeholder='Default coordinate diff is 0.05'
+            onChange={(e) => setPopulationNum(e.target.value)}
+            required
+          />
+
+<button
+          style={{ backgroundColor: 'blue', color: 'white', borderRadius: 10, alignSelf: 'center' }}
+          className='p-2'
+          onClick={() => HandleSubmitBackend()}
+        >
+          Save Population
+        </button>
+        </div>
+
       <div className='gap-2 flex flex-row justify-around my-5' > 
       <div className="info-container mx-10" >
   <div>Total Coordinate Scanned: <span className="highlight">{scannedCoordinates.length}
@@ -314,13 +386,12 @@ const  handleScannedCoordinates = ()=>{
         )}
       </GoogleMap> */}
 
-
+<ToastContainer/> 
 
 
 
 
  
-
 
 
 

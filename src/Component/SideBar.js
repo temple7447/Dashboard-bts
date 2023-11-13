@@ -23,7 +23,7 @@ const SidebarPage = () => {
                 <Sidebar.ItemGroup>
                     <NavLink to='/' >
                         <Sidebar.Item  icon={HiChartPie}>
-                            <p> Dashboard  voke</p>
+                            <p> Dashboard  </p>
                         
                         </Sidebar.Item>
                     </NavLink>
