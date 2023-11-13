@@ -8,7 +8,7 @@ import { useInformation } from '../../Provider';
 const EgliModel = () => {
 
 
-  const {useDistace, setdistance} = useInformation()
+  const {useDistace, setdistance, globarpathloss, setglobarpathloss} = useInformation()
 
   const [distance, setDistance] = useState(0);
   const [result, setResult] = useState(null);
@@ -18,10 +18,10 @@ const [htvalue,sethtvalue] = useState(0)
 const [hrvalue,sethrvalue] = useState(0)
 
   const HandleUsed  = ()=>{
-    if(distance.length > 0) {
+    if (!isNaN(result)) {
       const dKm = parseFloat(distance);
       // useDistace, setDistance
-      setdistance(dKm)
+      setglobarpathloss(result)
       setalertmesuc(true)
     }else{
       setalertme(true)
@@ -111,7 +111,7 @@ const [hrvalue,sethrvalue] = useState(0)
         <button className="calculate-button my-4" type="button" onClick={calculateHataPathLoss}>
           Calculate
         </button>
-        <div onClick={HandleUsed} style={{backgroundColor:'blue', padding:10, borderRadius:5, }}>Use of distance</div>
+        <div onClick={HandleUsed} style={{backgroundColor:'blue', padding:10, borderRadius:5, }}>Use of pathloss</div>
       </form>
       <div className='' style={{display:'flex'}}>
       {result !== null &&  <div className="result">PL_Hata(dB): {result}</div>}

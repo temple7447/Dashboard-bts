@@ -8,7 +8,7 @@ import { useInformation } from '../../Provider';
 const FreeSpaceModel = () => {
 
 
-  const {useDistace, setdistance} = useInformation()
+  const {useDistace, setdistance,globarpathloss, setglobarpathloss} = useInformation()
 
   const [distance, setDistance] = useState(0);
   const [result, setResult] = useState(null);
@@ -18,19 +18,20 @@ const [htvalue,sethtvalue] = useState(0)
 const [hrvalue,sethrvalue] = useState(0)
 const [frequency,setfrequency] = useState(0)
 
-  const HandleUsed  = ()=>{
-    if(distance.length > 0) {
-      const dKm = parseFloat(distance);
-      // useDistace, setDistance
-      setdistance(dKm)
-      setalertmesuc(true)
-    }else{
-      setalertme(true)
 
-    }
-   
+
+
+const HandleUsed = () => {
+  if (!isNaN(result)) {
+    const dKm = parseFloat(distance);
+    // Corrected function names
+    setglobarpathloss(result)
+    setalertmesuc(true)
+  }else{
+    setalertme(true)
+
   }
-
+};
 
 
   const handles = () => setalertmesuc(false);

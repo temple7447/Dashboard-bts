@@ -7,7 +7,7 @@ import ModifiedFreeSpace from './ModifiedFreeSpace';
 import EgliModelITV from './EgliModelITV';
 import './style.css'
 
-const FormElements = ({ modelcovalue, locationName, props }) => {
+const FormElements = ({ modelcovalue, locationName, props, mute }) => {
     const [selectedButton, setSelectedButton] = useState(null);
 
     const handleButtonClick = (buttonName) => {
@@ -54,10 +54,10 @@ const FormElements = ({ modelcovalue, locationName, props }) => {
 
                         <div style={{  borderLeftWidth:10, borderLeftColor:'black', padding:"10px"}}>
                             {/* Render content based on selectedButton */}
-                            {selectedButton === 'Modified Free Space' && < ModifiedFreeSpace  />  }
-                            {selectedButton === 'Modified Hata Model ITV' && <ModifiedHataModelITV />}
-                            {selectedButton === 'Egli Model EBS' && <EgliModelEBS /> }
-                            {selectedButton === 'Egli Model ITV' && <EgliModelITV />}
+                            {selectedButton === 'Modified Free Space' && < ModifiedFreeSpace mute={mute} />  }
+                            {selectedButton === 'Modified Hata Model ITV' && <ModifiedHataModelITV mute={mute} />}
+                            {selectedButton === 'Egli Model EBS' && <EgliModelEBS  mute ={mute} /> }
+                            {selectedButton === 'Egli Model ITV' && <EgliModelITV mute={mute} />}
                         </div>
                         </div>
                     </div>

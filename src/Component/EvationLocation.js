@@ -45,7 +45,7 @@ function EvationLocation() {
   const [frequency, setFrequency] = useState(743.25); // Default frequency in MHz
   const [distance, setDistance] = useState(1.0); // Default distance in kilometers
   const [pathLoss, setPathLoss] = useState(null);
-
+const [mute, setMute] = useState(true)
 
 
 
@@ -332,8 +332,8 @@ Elevation Value
           <Table.Cell>  {lat}  </Table.Cell>
           <Table.Cell> {elevation}</Table.Cell>
           <Table.Cell>      <Button onClick={()=>{ calculatePathLoss(); HandleShowModel(item, locationName, modealInfo)}}>Check</Button></Table.Cell>
-          <Table.Cell>      <Models /></Table.Cell>
-          <Table.Cell>   <ConversionalModal />   </Table.Cell>
+          <Table.Cell>      <Models  mute={mute}/></Table.Cell>
+          <Table.Cell>   <ConversionalModal mute={mute} />   </Table.Cell>
           <Table.Cell>
             {/* <a
               className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
@@ -365,7 +365,7 @@ Elevation Value
 )
       }
 
-   {/* <FormElements  modelcovalue={modelcovalue} locationName={locationName} props={props}/> */}
+   <FormElements  mute={setMute}  modelcovalue={modelcovalue} locationName={locationName} props={props}/>
  
 
 

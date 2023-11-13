@@ -4,7 +4,7 @@ import { useInformation } from '../../Provider';
 const HataModel = () => {
 
 
-  const {useDistace, setdistance} = useInformation()
+  const {useDistace, setdistance,globarpathloss, setglobarpathloss} = useInformation()
 
   const [distance, setDistance] = useState(0);
   const [result, setResult] = useState(null);
@@ -15,10 +15,8 @@ const [hrvalue,sethrvalue] = useState(0)
 const [frequency,setfrequency] = useState(0)
 
   const HandleUsed  = ()=>{
-    if(distance.length > 0) {
-      const dKm = parseFloat(distance);
-      // useDistace, setDistance
-      setdistance(dKm)
+    if (!isNaN(result)) {
+      setglobarpathloss(result)
       setalertmesuc(true)
     }else{
       setalertme(true)
