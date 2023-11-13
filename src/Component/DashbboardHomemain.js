@@ -163,7 +163,7 @@ const  handleScannedCoordinates = ()=>{
           onChange={(e) => setLocationName(e.target.value)}
         />
               <button style={{backgroundColor:'rgb(0,0,255)', padding:10,borderRadius:10, color:'white',}} className='mx-2' onClick={handleGeocodeClick}>location</button>
-              {/* <PopulationModel /> */}
+
               </div>
     <div className='flex flex-row' style={{justifyContent:'center', alignItems:'center', gap:5}} >
         {alertme && (
