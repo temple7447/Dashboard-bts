@@ -8,7 +8,7 @@ import { useInformation } from '../../Provider';
 const EgliModel = () => {
 
 
-  const {useDistace, setdistance, globarpathloss, setglobarpathloss} = useInformation()
+  const {useDistace, setdistance, globarpathloss, setglobarpathloss ,mute, setMute } = useInformation()
 
   const [distance, setDistance] = useState(0);
   const [result, setResult] = useState(null);
@@ -17,15 +17,16 @@ const [alertmesuc, setalertmesuc] = useState(false)
 const [htvalue,sethtvalue] = useState(0)
 const [hrvalue,sethrvalue] = useState(0)
 
-  const HandleUsed  = ()=>{
-    if (!isNaN(result)) {
-      const dKm = parseFloat(distance);
-      // useDistace, setDistance
+
+ const HandleUsed  = ()=>{
+    if (result !== null) {
+   
       setglobarpathloss(result)
       setalertmesuc(true)
+      setMute(false)
     }else{
       setalertme(true)
-
+      setMute(true)
     }
    
   }

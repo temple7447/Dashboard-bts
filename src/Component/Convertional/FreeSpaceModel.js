@@ -8,31 +8,29 @@ import { useInformation } from '../../Provider';
 const FreeSpaceModel = () => {
 
 
-  const {useDistace, setdistance,globarpathloss, setglobarpathloss} = useInformation()
+  const {useDistace, setdistance,globarpathloss, setglobarpathloss, setMute} = useInformation()
 
   const [distance, setDistance] = useState(0);
   const [result, setResult] = useState(null);
 const [alertme, setalertme] = useState(false)
 const [alertmesuc, setalertmesuc] = useState(false)
-const [htvalue,sethtvalue] = useState(0)
-const [hrvalue,sethrvalue] = useState(0)
 const [frequency,setfrequency] = useState(0)
 
 
 
 
-const HandleUsed = () => {
-  if (!isNaN(result)) {
-    const dKm = parseFloat(distance);
-    // Corrected function names
+const HandleUsed  = ()=>{
+  if (result !== null) {
+ 
     setglobarpathloss(result)
     setalertmesuc(true)
+    setMute(false)
   }else{
     setalertme(true)
-
+    setMute(true)
   }
-};
-
+ 
+}
 
   const handles = () => setalertmesuc(false);
   const handlew = () => setalertme(false);
@@ -106,7 +104,7 @@ const HandleUsed = () => {
         <button className="calculate-button my-4" type="button" onClick={calculateHataPathLoss}>
           Calculate
         </button>
-        <div onClick={HandleUsed} style={{backgroundColor:'blue', padding:10, borderRadius:5, }}>Use of distance</div>
+        <div onClick={HandleUsed} style={{backgroundColor:'blue', padding:10, borderRadius:5, }}>Use of pathloss</div>
       </form>
       <div className='' style={{display:'flex'}}>
       {result !== null &&  <div className="result">PL_Hata(dB): {result}</div>}

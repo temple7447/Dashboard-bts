@@ -2,17 +2,17 @@ import React, { useState } from 'react'
 import Textinput from './Textinput'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useInformation } from '../../Provider';
 
 const WeightUtility = () => {
     const [weightutility, setweightutility] = useState(null)
-    const [utilityfun, setutilityfun] = useState(0)
     const [usernum, setusernum] = useState(0)
 
-
+    const {mute, setMute, globarpathloss, setglobarpathloss,globeruf,setgloberuf } = useInformation()
 
 
     const result = ()=>{
-        const finalresult = usernum * usernum * utilityfun / usernum;
+        const finalresult = usernum * usernum * globeruf / usernum;
         if (isNaN(finalresult)) {
             toast.error('🦄 please all field must be inputed ', {
               position: "top-right",
@@ -26,6 +26,7 @@ const WeightUtility = () => {
               });
           } else {
             setweightutility(finalresult);
+            setgloberuf(finalresult)
           }
       
     }
@@ -33,12 +34,11 @@ const WeightUtility = () => {
   return (
     <div className="flex max-w-md flex-col gap-4">
 
-    <Textinput final={setutilityfun} initial={utilityfun}  title="Channel Bandwidth (MHZ)" />
+    <Textinput final={setgloberuf} initial={globeruf}  title="Channel Bandwidth (MHZ)" />
     <Textinput final={setusernum} initial={usernum}  title="Number of users" />
 
  
 
-      
    
       <ToastContainer/> 
 

@@ -7,7 +7,7 @@ import HataModel from './HataModel';
 import FreeSpaceModel from './FreeSpaceModel';
 import EgliModel from './EgliModel';
 
-function ConversionalModal({mute}) {
+function ConversionalModal() {
   const [openModal, setOpenModal] = useState(false);
   const [modalPlacement, setModalPlacement] = useState('center')
 
@@ -15,7 +15,7 @@ function ConversionalModal({mute}) {
     <>
       <div className="flex flex-wrap gap-4">
        
-     <Button onClick={() => setOpenModal(true)}>Conversional</Button>
+        <Button onClick={() => setOpenModal(true)}>Conversional</Button>
       </div>
       <Modal
         show={openModal}

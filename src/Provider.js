@@ -25,6 +25,9 @@ const [scannedCoordinates, setScannedCoordinates] = useState([]);
 const [scanagain, setScanAgain] = useState(false)
 const [populationArray, setpopulationArray] = useState([])
 const [globarpathloss, setglobarpathloss] = useState(null)
+const [globelthroughtput, setglobelthroughtput] = useState(null)
+const [globeruf,setgloberuf] = useState(null)
+const [mute, setMute] = useState(true)
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: apiKey, // Replace with your Google Maps API key
@@ -53,7 +56,7 @@ console.log(populationArray)
 
   return (
     <UserContext.Provider value={{scanagain, setScanAgain,northeastp,setnortheast,setsouthwest,southwestp, userName, updateUser, apiKey, setlatgeo , latgeo, setlonggeo, longgeo, isLoaded, setLocationName, locationName, useDistace, setdistance, shatterbar, setshatterbar, scannedCoordinates, setScannedCoordinates, populationArray
-     , globarpathloss, setglobarpathloss}}>
+   ,mute, setMute , globarpathloss, setglobarpathloss, setglobelthroughtput, globelthroughtput, globeruf,setgloberuf}}>
       {children}
     </UserContext.Provider>
   );

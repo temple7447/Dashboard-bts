@@ -6,8 +6,12 @@ import { useState } from 'react';
 import WeightUtility from './WeightUtility';
 import Throughput from './Throughput';
 import Utilityfunction from './Utilityfunction';
+import { useInformation } from '../../Provider';
 
-function Models({mute}) {
+function Models({}) {
+
+  const {mute, setMute } = useInformation()
+
   const [openModal, setOpenModal] = useState(false);
   const [modalPlacement, setModalPlacement] = useState('center')
 
@@ -15,9 +19,7 @@ function Models({mute}) {
     <>
       <div className="flex flex-wrap gap-4">
 
-      {
-        mute 
-      }  <Button disabled={mute}  onClick={() => setOpenModal(true)}>Pick site</Button>
+      <Button disabled={mute}  onClick={() => setOpenModal(true)}>Pick site</Button>
       </div>
       <Modal
         show={openModal}
