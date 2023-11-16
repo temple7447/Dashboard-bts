@@ -50,7 +50,6 @@ const [showSuitable, setShowSu] = useState(false)
   const [pathLoss, setPathLoss] = useState(null);
 
 
-
   const HandleScanSuitableHeight = () => {
     const retrievedData = JSON.parse(localStorage.getItem("suitableHeight")) || [];
     
@@ -246,7 +245,7 @@ const southwest = {
           setshatterbar(topElevations)
           setScanAgain(false)
           setmutesb(false)
-          localStorage.clear()
+          localStorage.removeItem("SuitableHeight");
           
         })
         .catch((error) => {
@@ -352,12 +351,14 @@ showSuitable && (
 
 
 
-<button disabled={mutesb} style={{padding:10, backgroundColor:'blue', color:'white',}} className='mx-2 my-4' onClick={()=> HandleScanSuitableHeight()}>Scan for Suitable Site</button>
- 
 
 
       {
         topElevations.length > 0 ? (      <div>
+<button disabled={mutesb} style={{padding:10, backgroundColor:'blue', color:'white',}} className='mx-2 my-4' onClick={()=> HandleScanSuitableHeight()}>Scan for Suitable Site</button>
+ 
+
+
       <Table striped>
       <Table.Head>
         <Table.HeadCell>
