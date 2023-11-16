@@ -8,54 +8,63 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-export default function PopulationModel () {
+export default function PopulationModel ({item}) {
   const [openModal, setOpenModal] = useState(false);
   const [modalPlacement, setModalPlacement] = useState('center')
   const [populationNum, setPopulationNum] = useState(0)
   const [populationPlace, setpopulationPlace] = useState('')
 
-  const HandleSubmitBackend = ()=>{
+
+  const handlePopulation = (item) => {
+    const retrievedData = JSON.parse(localStorage.getItem("suitableHeight")) || [];
+  
+    // Check if an item with the same coordinates already exists
+    const existingItem = retrievedData.find(existingItem => (
+      existingItem.coordinate.lat === item.coordinate.lat &&
+      existingItem.coordinate.lng === item.coordinate.lng
+    ));
+  
+    if (!existingItem) {
+      // Item with the same coordinates doesn't exist, add it to the array
+      const updatedObject = { ...item, population: populationNum };
+      retrievedData.push(updatedObject);
+      localStorage.setItem("suitableHeight", JSON.stringify(retrievedData))
+      toast.success(`coordinates add to the list`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        });
+      
+    } else {
+      // Item with the same coordinates already exists, handle accordingly
+      console.log("Item with the same coordinates already exists.")
+      toast.error(`same coordinates already exists.`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        });
+    }
+  };
 
 
-    axios.post("https://bts-backend.onrender.com/population", {populationNum, populationPlace})
-.then((res)=>{
-  console.log(res.data.mgs)
-  toast.success(`${res.data.mgs}`, {
-    position: "top-right",
-    autoClose: 5000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: "colored",
-    });
-setpopulationPlace('')
-setPopulationNum(0)
-})
-.catch((err)=>{
-  console.log(err)
-  toast.error(`${err.response.data.mgs}`, {
-    position: "top-right",
-    autoClose: 5000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: "colored",
-    });
-    setpopulationPlace('')
-setPopulationNum(0)
-})
-  }
+
 
 
 
   return (
     <>
       <div className="flex flex-wrap gap-4">
-        <Button onClick={() => setOpenModal(true)}>Add Population</Button>
+        <Button onClick={() => {setOpenModal(true)}}>Enter Population</Button>
       </div>
       <Modal
         show={openModal}
@@ -65,16 +74,7 @@ setPopulationNum(0)
         <Modal.Header>Add Population Number and Place</Modal.Header>
         <Modal.Body>
         <div style={{display:'flex', flexDirection:'column',gap:20}}>
-          <input
-                  className='my-3  w-30 placeh'
-            value={populationPlace}
-           
-            type="text"
-            step="any"
-            placeholder='Enter of Place'
-            onChange={(e) => setpopulationPlace(e.target.value)}
-            required
-          />
+       
           <input
                   className='my-3  w-30 placeh'
             value={populationNum}
@@ -89,7 +89,7 @@ setPopulationNum(0)
 <button
           style={{ backgroundColor: 'blue', color: 'white', borderRadius: 10, alignSelf: 'center' }}
           className='p-2'
-          onClick={() => HandleSubmitBackend()}
+          onClick={() =>  handlePopulation(item)}
         >
           Save Population
         </button>

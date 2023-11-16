@@ -18,6 +18,7 @@ import Throughput from './testsite/Throughput';
 import WeightUtility from './testsite/WeightUtility';
 import Models from './testsite/Model';
 import ConversionalModal from './Convertional/ConversionalModal';
+import PopulationModel from './Populations/Population';
 const containerStyle = {
   height: '90vh',
 };
@@ -38,13 +39,42 @@ function EvationLocation() {
   const emailInputRef = useRef(null)
   const props = { openModal, setOpenModal, emailInputRef };
   const [modelcovalue, setmodelcovalue] = useState()
+  const [suitable, setSuitable] = useState([])
+const [showSuitable, setShowSu] = useState(false)
+  const [mutesb, setmutesb] = useState(true)
 
-  const [modelat, setmodelat] = useState('')
 
   let [numTopAltitudes, setnumTopAltitudes] = useState(null)
   const [frequency, setFrequency] = useState(743.25); // Default frequency in MHz
   const [distance, setDistance] = useState(1.0); // Default distance in kilometers
   const [pathLoss, setPathLoss] = useState(null);
+
+
+
+  const HandleScanSuitableHeight = () => {
+    const retrievedData = JSON.parse(localStorage.getItem("suitableHeight")) || [];
+    
+    const result = retrievedData.reduce((acc, current) => {
+      // Convert weightutility and elevation to numbers for comparison
+      const currentWeightUtility = current.weightutlity;
+      const currentElevation = current.elevation;
+  
+      // Check if the current object has a higher weighted utility or elevation
+      if (currentWeightUtility > acc.weightutlity) {
+        return current;
+      } else if (currentWeightUtility === acc.weightutlity && currentElevation > acc.elevation) {
+        // If the weighted utilities are equal, consider elevation as a secondary factor
+        return current;
+      }
+  
+      return acc;
+    }, { weightutlity: -Infinity, elevation: -Infinity });
+  
+  setSuitable(result)
+  setShowSu(true)
+    return result; // Optional: Return the result if needed for further use
+  };
+
 
 
 
@@ -215,6 +245,9 @@ const southwest = {
           setTopElevations(topElevations);
           setshatterbar(topElevations)
           setScanAgain(false)
+          setmutesb(false)
+          localStorage.clear()
+          
         })
         .catch((error) => {
           console.error('Error fetching elevations:');
@@ -236,7 +269,7 @@ const southwest = {
 
   const HandleShowModel = (item)=>{
     // setCheckOrdinate(item)
-
+    console.log(item)
     setmodelcovalue(item)
     props.setOpenModal('initial-focus')
   }
@@ -253,6 +286,8 @@ useEffect(()=>{
    localStorage.setItem('yourArrayKey', JSON.stringify(storedArray))
   }
 
+  const { coordinate: suitableCoordinate, elevation:suitableelevation} = suitable
+
 
 
   return  (
@@ -267,6 +302,7 @@ useEffect(()=>{
         mapTypeId="hybrid"
        
       >
+
         {topElevations.map(({ coordinate, elevation }, index) => (
           <React.Fragment key={index}>
             <Marker
@@ -286,10 +322,37 @@ useEffect(()=>{
             />
           </React.Fragment>
         ))}
-     
+
+{
+showSuitable && (
+  <React.Fragment>
+  <Marker
+    position={suitableCoordinate}
+    label={`Elevation: meter This Site is more Suitable`}
+    icon={iconOptions}
+
+
+  />
+  <Circle
+    center={suitableCoordinate}
+    radius={useDistace}
+    options={{
+      fillColor: 'rgba(0, 0, 0, 1)',
+      strokeColor: 'white',
+    }}
+  />
+</React.Fragment>
+)
+}
+       
+      
+       
       </GoogleMap>
 
 
+
+
+<button disabled={mutesb} style={{padding:10, backgroundColor:'blue', color:'white',}} className='mx-2 my-4' onClick={()=> HandleScanSuitableHeight()}>Scan for Suitable Site</button>
  
 
 
@@ -331,19 +394,15 @@ Elevation Value
           <Table.Cell>  {lat}  </Table.Cell>
           <Table.Cell> {elevation}</Table.Cell>
           <Table.Cell>      <Button onClick={()=>{ calculatePathLoss(); HandleShowModel(item, locationName, modealInfo)}}>Check</Button></Table.Cell>
-          <Table.Cell>      <Models  /></Table.Cell>
+          <Table.Cell>      <Models  item={item} /></Table.Cell>
           <Table.Cell>   <ConversionalModal  /> </Table.Cell>
           <Table.Cell>
-            {/* <a
-              className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
-              href="/tables"
-            > */}
-            <Button onClick={()=> HandleSave(item)}>              <p>
-              Save
+          
+            <Button onClick={()=> HandleSave(item)}>       <p>
+           {suitable?.elevation ===  elevation ? (<div>Suitable</div>) : (<div>Save</div>) } 
               </p>
               </Button>
-
-            {/* </a> */}
+  
           </Table.Cell>
         </Table.Row>
     );
@@ -363,6 +422,10 @@ Elevation Value
   
 )
       }
+
+
+
+
 
    <FormElements    modelcovalue={modelcovalue} locationName={locationName} props={props}/>
  

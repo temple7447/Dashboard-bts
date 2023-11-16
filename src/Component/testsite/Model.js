@@ -8,7 +8,8 @@ import Throughput from './Throughput';
 import Utilityfunction from './Utilityfunction';
 import { useInformation } from '../../Provider';
 
-function Models({}) {
+function Models({item}) {
+
 
   const {mute, setMute } = useInformation()
 
@@ -28,9 +29,9 @@ function Models({}) {
       >
         <Modal.Header>Picking a better site</Modal.Header>
         <Modal.Body>
-          <Throughput />
-        <Utilityfunction />
-<WeightUtility />
+          <Throughput  />
+        <Utilityfunction  />
+<WeightUtility item={item} />
         </Modal.Body>
       </Modal>
     </>

@@ -1,6 +1,6 @@
 // UserContext.js
 import React, { createContext, useContext, useState , useEffect} from 'react';
-import { useJsApiLoader,  } from '@react-google-maps/api';
+import { useJsApiLoader } from '@react-google-maps/api';
 import axios from 'axios';
 // Create a context for the user data
 const UserContext = createContext();
@@ -39,7 +39,7 @@ const [mute, setMute] = useState(true)
 useEffect(() => {
   axios.get("https://bts-backend.onrender.com/population")
   .then((res)=>{
-    console.log(res.data)
+    // console.log(res.data)
     setpopulationArray(res.data.info)
   })
   .catch((err)=>{
@@ -48,7 +48,6 @@ useEffect(() => {
   })
 }, [])
 
-console.log(populationArray)
 
   const updateUser = (newName) => {
     setUserName(newName);

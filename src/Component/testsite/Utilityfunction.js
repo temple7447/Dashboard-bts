@@ -32,6 +32,11 @@ if (isNaN(finalresult)) {
   }
 
 
+
+  
+
+
+
   return (
     <div className="flex max-w-md flex-col gap-4">
 
@@ -39,12 +44,10 @@ if (isNaN(finalresult)) {
     <Textinput final={setusernum} initial={usernum}  title="Number of users" />
 
  
-
-      
    
       <ToastContainer/> 
       
-      <button onClick={result}>utilityfun</button>
+      <button onClick={result} >utilityfun</button>
       <div>   {utilityfun}</div>
   
     </div>

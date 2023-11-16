@@ -237,8 +237,8 @@ const  handleScannedCoordinates = ()=>{
   <>
   <div style={{display:'flex', flexDirection:'row', gap:10}}>
       <Button onClick={() => handleScannedCoordinates()}>Scan coordinates</Button>
-      <PopulationModel />
-      </div>
+    
+     </div>
       <Modal show={props.openModal === 'default'} onClose={() => props.setOpenModal(undefined)}>
         <Modal.Header>Total Scanned Coordinates</Modal.Header>
         <Modal.Body>
