@@ -28,8 +28,8 @@ function Models({}) {
       >
         <Modal.Header>Picking a better site</Modal.Header>
         <Modal.Body>
+          <Throughput />
         <Utilityfunction />
-<Throughput />
 <WeightUtility />
         </Modal.Body>
       </Modal>
