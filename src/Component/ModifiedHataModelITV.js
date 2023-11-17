@@ -5,7 +5,7 @@ import { Alert } from 'flowbite-react';
 const ModifiedHataModelITV = () => {
 
 
-  const {useDistace, setdistance} = useInformation()
+  const {useDistace, setdistance, globarpathloss, setglobarpathloss,setglobelthroughtput, globelthroughtput} = useInformation() 
 
   const [distance, setDistance] = useState('');
   const [result, setResult] = useState(null);
@@ -19,11 +19,12 @@ const [alertmesuc, setalertmesuc] = useState(false)
       // useDistace, setDistance
       setdistance(dKm)
       setalertmesuc(true)
+     
     }else{
       setalertme(true)
 
     }
-   
+  
   }
 
   const handles = () => setalertmesuc(false);
@@ -48,6 +49,7 @@ const [alertmesuc, setalertmesuc] = useState(false)
         (44.9 - 6.55 * log10(ht)) * log10(dKm);
 
       setResult(pathLoss);
+      setglobarpathloss(pathLoss)
     } else {
       setResult('Please enter valid input for all fields.');
     }

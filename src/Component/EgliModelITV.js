@@ -10,8 +10,8 @@ const EgliModelITV = () => {
   const [result, setResult] = useState(null);
   const [alertme, setalertme] = useState(false)
   const [alertmesuc, setalertmesuc] = useState(false)
-  const {useDistace, setdistance} = useInformation() 
-  
+  const {useDistace, setdistance, setglobarpathloss} = useInformation() 
+ 
     const HandleUsed  = ()=>{
       if(distance.length > 0) {
         const dKm = parseFloat(distance);
@@ -36,6 +36,7 @@ const EgliModelITV = () => {
     if (!isNaN(Dkm)) {
       const logResult = 40 * Math.log10(Dkm) - 20 * Math.log10(ht) - 10 * Math.log10(hr);
       setResult(logResult);
+      setglobarpathloss(logResult)
     } else {
       setResult(null);
     }

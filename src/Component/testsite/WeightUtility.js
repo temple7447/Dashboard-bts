@@ -70,6 +70,16 @@ const WeightUtility = ({item}) => {
             theme: "colored",
             });
         } else {
+          toast.success('You can now Search for Suitable Height ', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            });
           setweightutility(finalresult);
           setgloberuf(finalresult)
         }
@@ -88,7 +98,7 @@ const WeightUtility = ({item}) => {
    
       <ToastContainer/> 
 
-      <button onClick={()=> {result(); handlePopulation(item) }} >Weight Utility</button>
+      <button onClick={()=> {result(); handlePopulation(item) }} style={{backgroundColor:'blue', padding:10, borderRadius:5, }} >Weight Utility</button>
         <div>{weightutility}</div>
     </div>
   )

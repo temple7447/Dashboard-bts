@@ -26,6 +26,16 @@ if (isNaN(finalresult)) {
     theme: "colored",
     });
 } else {
+  toast.success('Thank You', {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+    });
   setutilityfun(finalresult);
   setgloberuf(finalresult)
 }
@@ -47,7 +57,7 @@ if (isNaN(finalresult)) {
    
       <ToastContainer/> 
       
-      <button onClick={result} >utilityfun</button>
+      <button onClick={result} style={{backgroundColor:'blue', padding:10, borderRadius:5, }} >utilityfun</button>
       <div>   {utilityfun}</div>
   
     </div>

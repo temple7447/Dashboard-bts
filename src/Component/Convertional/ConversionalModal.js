@@ -15,7 +15,7 @@ function ConversionalModal() {
     <>
       <div className="flex flex-wrap gap-4">
        
-        <Button onClick={() => setOpenModal(true)}>Conversional</Button>
+        <Button onClick={() => setOpenModal(true)}>Theoretical model</Button>
       </div>
       <Modal
         show={openModal}

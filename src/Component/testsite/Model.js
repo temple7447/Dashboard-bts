@@ -29,9 +29,11 @@ function Models({item}) {
       >
         <Modal.Header>Picking a better site</Modal.Header>
         <Modal.Body>
+          <div style={{display:'flex',flexDirection:'column' ,alignSelf:'center'}}>
           <Throughput  />
         <Utilityfunction  />
 <WeightUtility item={item} />
+</div>
         </Modal.Body>
       </Modal>
     </>

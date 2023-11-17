@@ -8,7 +8,7 @@ import Distance from './Distance';
 const EgliModelEBS = () => {
   const [distance, setDistance] = useState('');
   const [result, setResult] = useState(null);
-  const {useDistace, setdistance} = useInformation()
+  const {useDistace, setdistance, setglobarpathloss} = useInformation()
   const [alertme, setalertme] = useState(false)
 const [alertmesuc, setalertmesuc] = useState(false)
 
@@ -39,6 +39,7 @@ const handlew = () => setalertme(false);
     if (!isNaN(Dkm)) {
       const logResult = 40 * Math.log10(Dkm) - 20 * Math.log10(ht) - 10 * Math.log10(hr);
       setResult(logResult);
+      setglobarpathloss(logResult)
     } else {
       setResult(null);
     }

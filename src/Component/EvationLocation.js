@@ -394,7 +394,7 @@ Elevation Value
           <Table.Cell> {lng} </Table.Cell>
           <Table.Cell>  {lat}  </Table.Cell>
           <Table.Cell> {elevation}</Table.Cell>
-          <Table.Cell>      <Button onClick={()=>{ calculatePathLoss(); HandleShowModel(item, locationName, modealInfo)}}>Check</Button></Table.Cell>
+          <Table.Cell>      <Button onClick={()=>{ calculatePathLoss(); HandleShowModel(item, locationName, modealInfo)}}>Empirical model</Button></Table.Cell>
           <Table.Cell>      <Models  item={item} /></Table.Cell>
           <Table.Cell>   <ConversionalModal  /> </Table.Cell>
           <Table.Cell>

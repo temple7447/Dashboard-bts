@@ -12,7 +12,8 @@ const ModifiedFreeSpace = () => {
   const [result, setResult] = useState(null);
   const [alertme, setalertme] = useState(false)
 const [alertmesuc, setalertmesuc] = useState(false)
-const {useDistace, setdistance} = useInformation() 
+const {useDistace, setdistance, globarpathloss, setglobarpathloss,setglobelthroughtput, globelthroughtput} = useInformation() 
+
 
 
 
@@ -26,7 +27,8 @@ const {useDistace, setdistance} = useInformation()
 
     if (!isNaN(d)) {
       const logResult = 31.09 + 20 * Math.log10(Fmhz) + 20 * Math.log10(d);
-      setResult(logResult);
+      setResult(logResult)
+      setglobarpathloss(logResult)
     } else {
       setResult(null);
     }

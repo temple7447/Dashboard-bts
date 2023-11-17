@@ -20,11 +20,12 @@ const result = async  ()=>{
 
   const log2 = Math.log2;
 
-  const signal =  transmitterPower - globarpathloss
+  const signal =  parseFloat(transmitterPower) -  parseFloat(globarpathloss)
+  const logv = signal / parseFloat(thermalnoise)
+  const reultvalue =  6 *  log2(1 + logv )
 
-  const reultvalue =  6 *  log2( 1 + signal / thermalnoise )
   if (isNaN(reultvalue)) {
-    toast.error('🦄 please all field must be inputed ', {
+    toast.error('Enter a correct value for transmitter power and thermal Noise', {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -34,7 +35,18 @@ const result = async  ()=>{
       progress: undefined,
       theme: "colored",
       });
+
   } else {
+    toast.success('Thank You', {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+      });
     setPd(reultvalue);
     setglobelthroughtput(reultvalue)
   }
@@ -47,8 +59,8 @@ const result = async  ()=>{
     <Textinput final={setglobarpathloss} initial={globarpathloss}  title="Path Loss at a distance of dm km dBm" />
     <Textinput final={setThermalNoise} initial={thermalnoise}  title="Thermal Noise [watt]" />
  
-      <button onClick={result}>Through put</button>
-      
+      <button onClick={result} style={{backgroundColor:'blue', padding:10, borderRadius:5, }} >Through put</button>
+     
    
       <ToastContainer/> 
   
