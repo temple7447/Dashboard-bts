@@ -126,7 +126,7 @@ useEffect(()=>{
       });
   }
   readUserData("BTS");
-},[isLoaded, map, numTopAltitudes, useDistace,checkOrdinatediff ])
+},[isLoaded, map, numTopAltitudes, useDistace,checkOrdinatediff, scanagain ])
 
 
 useEffect(()=>{
@@ -155,7 +155,7 @@ useEffect(()=>{
       });
   }
   readUserData("BTS");
-},[isLoaded, map, numTopAltitudes, useDistace,checkOrdinatediff ])
+},[isLoaded, map, numTopAltitudes, useDistace,checkOrdinatediff ,scanagain ])
 
 
 const calculatePathLoss = () => {
@@ -317,8 +317,9 @@ useEffect(()=>{
               center={coordinate}
               radius={useDistace}
               options={{
-                fillColor: 'rgba(0, 0, 255, 0.3)',
+               fillColor: 'rgba(0, 0, 255, 0.3)',
                 strokeColor: 'blue',
+              
               }}
             />
           </React.Fragment>
@@ -338,8 +339,9 @@ showSuitable && (
     center={suitableCoordinate}
     radius={useDistace}
     options={{
-      fillColor: 'rgba(0, 0, 0, 1)',
+      fillColor: 'rgba(0, 255, 0, 0.5)',
       strokeColor: 'white',
+      zIndex:10
     }}
   />
 </React.Fragment>
@@ -368,7 +370,7 @@ showSuitable && (
       theme: "colored",
       });}}>Scan for Suitable Site</button>
  
-<button style={{padding:10, backgroundColor:'red', color:'white',}} className='mx-2 my-4' onClick={()=>  {localStorage.removeItem("suitableHeight");  toast.success('Previous Suitable Site has been clear', {
+{/* <button style={{padding:10, backgroundColor:'red', color:'white',}} className='mx-2 my-4' onClick={()=>  {setScanAgain(pre => !pre); localStorage.removeItem("suitableHeight");  toast.success('Previous Suitable Site has been clear', {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -377,7 +379,7 @@ showSuitable && (
       draggable: true,
       progress: undefined,
       theme: "colored",
-      });}}>Clear seleted Site</button>
+      });}}>Clear seleted Site</button> */}
 
       <Table striped>
       <Table.Head>
