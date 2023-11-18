@@ -58,6 +58,7 @@ const WeightUtility = ({item}) => {
 
     const result = ()=>{
       const finalresult = usernum * usernum * globeruf / usernum;
+      console.log(finalresult)
       if (isNaN(finalresult)) {
           toast.error('🦄 please all field must be inputed ', {
             position: "top-right",
@@ -81,7 +82,7 @@ const WeightUtility = ({item}) => {
             theme: "colored",
             });
           setweightutility(finalresult);
-          setgloberuf(finalresult)
+      
         }
     
   }

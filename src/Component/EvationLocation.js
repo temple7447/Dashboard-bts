@@ -245,7 +245,7 @@ const southwest = {
           setshatterbar(topElevations)
           setScanAgain(false)
           setmutesb(false)
-          localStorage.removeItem("SuitableHeight");
+          localStorage.removeItem("suitableHeight");
           
         })
         .catch((error) => {
@@ -357,7 +357,7 @@ showSuitable && (
         topElevations.length > 0 ? (      <div>
 <button disabled={mutesb} style={{padding:10, backgroundColor:'blue', color:'white',}} className='mx-2 my-4' onClick={()=> HandleScanSuitableHeight()}>Scan for Suitable Site</button>
  
-
+<button style={{padding:10, backgroundColor:'blue', color:'white',}} className='mx-2 my-4' onClick={()=>  localStorage.removeItem("suitableHeight")}>Clear seleted Site</button>
 
       <Table striped>
       <Table.Head>
