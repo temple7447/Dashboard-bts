@@ -72,7 +72,7 @@ const HandleUsed  = ()=>{
           <span>
             <p>
               <span className="font-medium">Success alert!</span>
-            The distance on map has be change to this value {useDistace}m
+              This pathloss can now be used 
             </p>
           </span>
         </Alert>
@@ -98,7 +98,7 @@ const HandleUsed  = ()=>{
           />
         </div>
         <div className="form-group flex flex-row items-center">
-          <label>Height of Receiver(km):</label>
+          <label>Height of Receiver(m):</label>
           <input
            type="number"
             value={hrvalue}
@@ -107,7 +107,7 @@ const HandleUsed  = ()=>{
           />
         </div>
         <div className="form-group flex flex-row items-center">
-          <label>Height of Transmitter(km):</label>
+          <label>Height of Transmitter(m):</label>
           <input
            type="number"
             value={htvalue}

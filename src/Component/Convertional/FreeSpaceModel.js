@@ -75,7 +75,7 @@ const HandleUsed  = ()=>{
           <span>
             <p>
               <span className="font-medium">Success alert!</span>
-            The distance on map has be change to this value {useDistace}m
+              This pathloss can now be used 
             </p>
           </span>
         </Alert>

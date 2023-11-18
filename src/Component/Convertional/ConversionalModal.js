@@ -15,14 +15,14 @@ function ConversionalModal() {
     <>
       <div className="flex flex-wrap gap-4">
        
-        <Button onClick={() => setOpenModal(true)}>Theoretical model</Button>
+        <Button onClick={() => setOpenModal(true)}>Theoretical model </Button>
       </div>
       <Modal
         show={openModal}
         position={modalPlacement}
         onClose={() => setOpenModal(false)}
       >
-        <Modal.Header>Small modal</Modal.Header>
+        <Modal.Header>Using the Theoretical model</Modal.Header>
         <Modal.Body>
         <HataModel />
    <FreeSpaceModel />

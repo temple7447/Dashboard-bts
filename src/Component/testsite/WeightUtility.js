@@ -39,7 +39,7 @@ const WeightUtility = ({item}) => {
           });
         
         
-      } else {
+      } else if(existingItem){
         // Item with the same coordinates already exists, handle accordingly
         console.log("Item with the same coordinates already exists.")
         toast.error(`same coordinates already exists.`, {
@@ -71,16 +71,6 @@ const WeightUtility = ({item}) => {
             theme: "colored",
             });
         } else {
-          toast.success('You can now Search for Suitable Height ', {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-            });
           setweightutility(finalresult);
       
         }
