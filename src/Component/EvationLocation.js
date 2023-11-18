@@ -18,6 +18,8 @@ import Throughput from './testsite/Throughput';
 import WeightUtility from './testsite/WeightUtility';
 import Models from './testsite/Model';
 import ConversionalModal from './Convertional/ConversionalModal';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import PopulationModel from './Populations/Population';
 const containerStyle = {
   height: '90vh',
@@ -355,9 +357,27 @@ showSuitable && (
 
       {
         topElevations.length > 0 ? (      <div>
-<button disabled={mutesb} style={{padding:10, backgroundColor:'blue', color:'white',}} className='mx-2 my-4' onClick={()=> HandleScanSuitableHeight()}>Scan for Suitable Site</button>
+<button disabled={mutesb} style={{padding:10, backgroundColor:'blue', color:'white',}} className='mx-2 my-4' onClick={()=> {HandleScanSuitableHeight();   toast.success('Scanning for Suitable Site', {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+      });}}>Scan for Suitable Site</button>
  
-<button style={{padding:10, backgroundColor:'red', color:'white',}} className='mx-2 my-4' onClick={()=>  localStorage.removeItem("suitableHeight")}>Clear seleted Site</button>
+<button style={{padding:10, backgroundColor:'red', color:'white',}} className='mx-2 my-4' onClick={()=>  {localStorage.removeItem("suitableHeight");  toast.success('Previous Suitable Site has been clear', {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+      });}}>Clear seleted Site</button>
 
       <Table striped>
       <Table.Head>
@@ -426,7 +446,7 @@ Elevation Value
 
 
 
-
+<ToastContainer/> 
 
    <FormElements    modelcovalue={modelcovalue} locationName={locationName} props={props}/>
  
