@@ -267,7 +267,7 @@ const  handleScannedCoordinates = ()=>{
 </div>
 
 <div className='p-3 ' style={{backgroundColor:'white', borderRadius:5,width:300 }}>
-<div style={{textAlign:'center'}}>Theoritical models Model</div>
+<div style={{textAlign:'center'}}>Theoretical Model</div>
 <div>
 <ol>
   <li>Free Space</li>

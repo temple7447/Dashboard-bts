@@ -16,7 +16,7 @@ const SidebarPage = () => {
         <Sidebar className='' aria-label="Sidebar with logo branding example" >
 
 <div className='flex flex-row gap-3'>
-            <p className='' style={{ fontSize: '30px', fontWeight: 'bold' }}> TVWSPT   </p>
+            <p className='' style={{ fontSize: '30px', fontWeight: 'bold' }}>    </p>
             <img src={imagelogo} alt="logo" style={{height:50, width: 50}} />
 </div>
             <Sidebar.Items >

@@ -353,7 +353,7 @@ showSuitable && (
                   <h3>Place: <span style={{fontWeight:700, fontSize:20}}>{locationName || "Auchi"}</span></h3>
                   <div>Latitude: <span style={{fontWeight:700, fontSize:20}}>{suitableCoordinate.lat} </span> </div>
                   <div>Longitude:<span style={{fontWeight:700, fontSize:20}}> {suitableCoordinate.lng} </span></div>
-                  <div>Altitide(m): <span style={{fontWeight:700, fontSize:20}}> {suitableelevation} </span></div>
+                  <div>Altitude (m): <span style={{fontWeight:700, fontSize:20}}> {suitableelevation} </span></div>
                   <div>Weighted Utility: <span style={{fontWeight:700, fontSize:20}}> {suitableWeight}</span> </div>
                   <div>Through put: <span style={{fontWeight:700, fontSize:20}}> {globelthroughtput}  </span> </div>
                   {/* Add additional content for your card popup */}
