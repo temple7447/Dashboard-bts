@@ -1,7 +1,7 @@
 'use client';
 import { useInformation } from '../Provider'
 import React, { useEffect, useState, useRef } from 'react';
-import { GoogleMap, useJsApiLoader, Marker, Circle } from '@react-google-maps/api';
+import { GoogleMap, useJsApiLoader, Marker, Circle, InfoWindow } from '@react-google-maps/api';
 import { Button, Checkbox, Label, Modal, TextInput, Table } from 'flowbite-react';
 import { getDatabase, ref, set, get } from "firebase/database";
 import population from "./Population";
@@ -31,7 +31,7 @@ const numPoints = 10; // Adjust the number of points as needed
 
 
 function EvationLocation() {
-  const {scanagain, setScanAgain,northeastp,setnortheast,setsouthwest,southwestp, apiKey, setlatgeo, latgeo, setlonggeo, longgeo, isLoaded, setLocationName, locationName, useDistace, setdistance, shatterbar, setshatterbar,scannedCoordinates, setScannedCoordinates, mute, setMute, globarpathloss, setglobarpathloss } = useInformation()
+  const {scanagain, setScanAgain,northeastp,setnortheast,setsouthwest,southwestp, apiKey, setlatgeo, latgeo, setlonggeo, longgeo, isLoaded, setLocationName, locationName, useDistace, setdistance, shatterbar, setshatterbar,scannedCoordinates, setScannedCoordinates, mute, setMute, globarpathloss, setglobarpathloss, globelthroughtput } = useInformation()
   const [map, setMap] = useState(null);
   const [topElevations, setTopElevations] = useState([]);
 
@@ -44,7 +44,7 @@ function EvationLocation() {
   const [suitable, setSuitable] = useState([])
 const [showSuitable, setShowSu] = useState(false)
   const [mutesb, setmutesb] = useState(true)
-
+  const [selectedPlace, setSelectedPlace] = useState(null);
 
   let [numTopAltitudes, setnumTopAltitudes] = useState(null)
   const [frequency, setFrequency] = useState(743.25); // Default frequency in MHz
@@ -247,7 +247,7 @@ const southwest = {
           setshatterbar(topElevations)
           setScanAgain(false)
           setmutesb(false)
-          localStorage.removeItem("suitableHeight");
+          // localStorage.removeItem("suitableHeight");
           
         })
         .catch((error) => {
@@ -287,7 +287,7 @@ useEffect(()=>{
    localStorage.setItem('yourArrayKey', JSON.stringify(storedArray))
   }
 
-  const { coordinate: suitableCoordinate, elevation:suitableelevation} = suitable
+  const { coordinate: suitableCoordinate, elevation:suitableelevation,  weightutlity:suitableWeight  } = suitable
 
 
 
@@ -344,11 +344,26 @@ showSuitable && (
       zIndex:10
     }}
   />
+
+<InfoWindow
+                 position={suitableCoordinate}
+                onCloseClick={() => setSelectedPlace(null)}
+              >
+                <div>
+                  <h3>Place: <span style={{fontWeight:700, fontSize:20}}>{locationName || "Auchi"}</span></h3>
+                  <div>Latitude: <span style={{fontWeight:700, fontSize:20}}>{suitableCoordinate.lat} </span> </div>
+                  <div>Longitude:<span style={{fontWeight:700, fontSize:20}}> {suitableCoordinate.lng} </span></div>
+                  <div>Altitide(m): <span style={{fontWeight:700, fontSize:20}}> {suitableelevation} </span></div>
+                  <div>Weighted Utility: <span style={{fontWeight:700, fontSize:20}}> {suitableWeight}</span> </div>
+                  <div>Through put: <span style={{fontWeight:700, fontSize:20}}> {globelthroughtput}  </span> </div>
+                  {/* Add additional content for your card popup */}
+                </div>
+              </InfoWindow>
 </React.Fragment>
 )
 }
-       
       
+     
        
       </GoogleMap>
 
@@ -370,7 +385,7 @@ showSuitable && (
       theme: "colored",
       });}}>Scan for Suitable Site</button>
  
-{/* <button style={{padding:10, backgroundColor:'red', color:'white',}} className='mx-2 my-4' onClick={()=>  {setScanAgain(pre => !pre); localStorage.removeItem("suitableHeight");  toast.success('Previous Suitable Site has been clear', {
+<button style={{padding:10, backgroundColor:'red', color:'white',}} className='mx-2 my-4' onClick={()=>  {setScanAgain(pre => !pre); localStorage.removeItem("suitableHeight");  toast.success('Previous Suitable Site has been clear', {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -379,7 +394,7 @@ showSuitable && (
       draggable: true,
       progress: undefined,
       theme: "colored",
-      });}}>Clear seleted Site</button> */}
+      });}}>Clear seleted Site</button>
 
       <Table striped>
       <Table.Head>
