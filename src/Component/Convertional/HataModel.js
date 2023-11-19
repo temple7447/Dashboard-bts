@@ -119,7 +119,7 @@ const HandleUsed  = ()=>{
         <button className="calculate-button my-4" type="button" onClick={calculateHataPathLoss}>
           Calculate
         </button>
-        <div onClick={HandleUsed} style={{backgroundColor:'blue', padding:10, borderRadius:5, }}>Use of pathloss</div>
+        <div onClick={HandleUsed} style={{backgroundColor:'blue', padding:10, borderRadius:5, }}>Use pathloss</div>
       </form>
       <div className='' style={{display:'flex'}}>
       {result !== null &&  <div className="result">PL_Hata(dB): {result}</div>}

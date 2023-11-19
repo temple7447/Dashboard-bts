@@ -27,7 +27,7 @@ const containerStyle = {
 
 
 
-const numPoints = 10; // Adjust the number of points as needed
+const numPoints = 10; 
 
 
 function EvationLocation() {

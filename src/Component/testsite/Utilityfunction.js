@@ -57,7 +57,7 @@ if (isNaN(finalresult)) {
    
       <ToastContainer/> 
       
-      <button onClick={result} style={{backgroundColor:'blue', padding:10, borderRadius:5, }} >utilityfun</button>
+      <button onClick={result} style={{backgroundColor:'blue', padding:10, borderRadius:5, }} >utility function</button>
       <div>   {utilityfun}</div>
   
     </div>
