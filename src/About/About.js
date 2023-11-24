@@ -3,11 +3,15 @@
 import { Button, Modal, Select } from 'flowbite-react';
 import { useState } from 'react';
 
+
+
 const About = ({ final, initial }) => {
+  const [openModal, setOpenModal] = useState(false);
   return (
     <>
-      <Modal show={initial} position='center' onClose={() => final(false)}>
-        <Modal.Header>Small modal</Modal.Header>
+    <Button onClick={() => setOpenModal(true)}>About the Software</Button>
+      <Modal show={openModal} position='center' onClose={() => setOpenModal(false)}>
+        <Modal.Header>About The Software</Modal.Header>
         <Modal.Body>
           <div className="space-y-6 p-6">
             <p>
@@ -20,8 +24,8 @@ const About = ({ final, initial }) => {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={() => final(false)}>I accept</Button>
-          <Button color="gray" onClick={() => final(false)}>
+          <Button onClick={() => setOpenModal(false)}>I accept</Button>
+          <Button color="gray" onClick={() => setOpenModal(false)}>
             Decline
           </Button>
         </Modal.Footer>
@@ -31,3 +35,7 @@ const About = ({ final, initial }) => {
 }
 
 export default About;
+
+
+
+
