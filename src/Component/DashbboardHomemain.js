@@ -13,6 +13,7 @@ import { AiOutlineSearch } from 'react-icons/ai';
 import Tables from './Tables';
 import ScannedTable from './ScannedTable';
 import PopulationModel from './Populations/Population';
+import About from '../About/About';
 
 
 
@@ -29,7 +30,7 @@ function DashbboardHomemain() {
   const [alertmesuca, setAlertmesuca] = useState(false);
   const [numTopAltitudes, setnumTopAltitudes] = useState(null)
   const [clickedLocation, setClickedLocation] = useState(null);
-
+  const [openModalpop, setOpenModalpop] = useState(false);
 
   const apiUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${locationName}&key=${apiKey}`;
 
@@ -134,11 +135,22 @@ const  handleScannedCoordinates = ()=>{
     }, 4000);
    
   };
+  useEffect(()=>{
+
+    if(!isLoaded){
+      setTimeout(()=>{
+    setOpenModalpop(true)
+      },10000)
+    }
+
+  },[])
  
+
+
 
   return  isLoaded ? (
     <div className='bodyimage' style={{}}>
-   
+  <About final={setOpenModalpop} initial={openModalpop} />
     <div className='flex flex-row px-4' style={{height:'100%', width:'100%', justifyContent:'space-around',backgroundColor:"#ffffffff", alignItems:'center' }}>
     {alertmesuca && (
           <Alert style={{position:'absolute', }} color="success" onDismiss={handleSuccessDismissa}>

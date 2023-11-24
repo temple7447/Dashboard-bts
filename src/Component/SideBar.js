@@ -4,6 +4,7 @@ import { Sidebar } from 'flowbite-react';
 import { HiChartPie, HiViewBoards,  } from 'react-icons/hi';
 import { NavLink } from 'react-router-dom'
 import imagelogo  from '../Component/assest/satelite1.png'
+import logotool from '../Component/assest/Tools1.png'
 import { useInformation } from '../Provider'
 
 
@@ -16,8 +17,9 @@ const SidebarPage = () => {
         <Sidebar className='' aria-label="Sidebar with logo branding example" >
 
 <div className='flex flex-row gap-3'>
-            <p className='' style={{ fontSize: '30px', fontWeight: 'bold' }}>    </p>
+
             <img src={imagelogo} alt="logo" style={{height:50, width: 50}} />
+            <img src={logotool} alt="logo" style={{height:50, width: 200}} />
 </div>
             <Sidebar.Items >
                 <Sidebar.ItemGroup>
