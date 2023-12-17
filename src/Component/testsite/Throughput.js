@@ -55,7 +55,7 @@ const result = async  ()=>{
   return (
     <div className="flex max-w-md flex-col gap-4">
 
-    <Textinput final={settransmitterPower} initial={transmitterPower}  title="Transmitter Power (dbw)"/>
+    <Textinput final={settransmitterPower} initial={transmitterPower}  title="Transmitter Power (watt)"/>
     <Textinput final={setglobarpathloss} initial={globarpathloss}  title="Path Loss at a distance of dm km dBm" />
     <Textinput final={setThermalNoise} initial={thermalnoise}  title="Thermal Noise [watt]" />
  

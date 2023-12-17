@@ -12,7 +12,7 @@ import About from '../About/About';
 const SidebarPage = () => {
   const {scanagain, setScanAgain,northeastp,setnortheast,setsouthwest,southwestp, apiKey, setlatgeo, latgeo, setlonggeo, longgeo, isLoaded, setLocationName, locationName, useDistace, setdistance, shatterbar, setshatterbar,scannedCoordinates, setScannedCoordinates } = useInformation()
 
- 
+
     return (
  
         <Sidebar className='' aria-label="Sidebar with logo branding example" >
