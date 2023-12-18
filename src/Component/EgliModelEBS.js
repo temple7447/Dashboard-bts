@@ -75,7 +75,7 @@ const handlew = () => setalertme(false);
         </Alert>
       )}
       <h2>Egli Model EBS Predition</h2>
-      <div className="info-text">Transmission Height = 228.6m and Receiver Height = 1.5</div>
+      <div className="info-text">Transmitter Height = 228.6m and Receiver Height = 1.5</div>
       <label>
         Distance (in kilometers):
         <input type="number" value={distance} onChange={(e) => setDistance(e.target.value)} />

@@ -85,7 +85,7 @@ const [alertmesuc, setalertmesuc] = useState(false)
         </Alert>
       )}
       <h1>Hata Path Loss Calculator</h1>
-     <div className="info-text">Transmission Height = 3048m, Receiver Height = 1.5 and Frequecy = 479.25Mhz;</div>
+     <div className="info-text">Transmitter Height = 3048m, Receiver Height = 1.5 and Frequecy = 479.25Mhz;</div>
       <form className="form-container">
         <div className="form-group">
           <label>Link Distance (km):</label>

@@ -20,11 +20,11 @@ const result = async  ()=>{
 
   const log2 = Math.log2;
 
-  const signal =  parseFloat(transmitterPower) -  parseFloat(globarpathloss)
+  const signal =  parseFloat(transmitterPower) -  parseFloat(globarpathloss);
   const logv = signal / parseFloat(thermalnoise)
   const reultvalue =  6 *  log2(1 + logv )
 
-  if (isNaN(reultvalue)) {
+  if (isNaN(reultvalue)) {  
     toast.error('Enter a correct value for transmitter power and thermal Noise', {
       position: "top-right",
       autoClose: 5000,

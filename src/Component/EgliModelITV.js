@@ -73,7 +73,7 @@ const EgliModelITV = () => {
       )}
       
       <h2>Egli Model ITV Predition</h2>
-      <div className="info-text">Transmission Height = 3048m and Receiver Height = 1.5</div>
+      <div className="info-text">Transmitter Height = 3048m and Receiver Height = 1.5</div>
       <label>
       Distance (in kilometers):
         <input type="number" value={distance} onChange={(e) => setDistance(e.target.value)} />
