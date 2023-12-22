@@ -154,7 +154,7 @@ const  handleScannedCoordinates = ()=>{
         )}
     <div>
    
-    <AiOutlineSearch  style={{position:'absolute', fontSize:'30px', top:20}}/>
+   
    
     <input
         className='my-3  placeh'

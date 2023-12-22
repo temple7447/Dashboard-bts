@@ -1,12 +1,13 @@
 import React from 'react'
 import {Outlet} from 'react-router-dom'
-import SidebarPage from './SideBar'
+
+import TopNav from './TopNav'
 
 const Unique = () => {
   return (
-    <div className='flex flex-row justify-between' style={{width:'100vw'}}>
-    <div style={{height:'100vh'}} >
-    <SidebarPage />
+    <div className='flex flex-col justify-between' style={{width:'100vw'}}>
+    <div style={{}} >
+   <TopNav />
     </div>
     <div style={{  width: '100vw',}} className='mx-auto'>
       <Outlet />
