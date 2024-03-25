@@ -21,6 +21,7 @@ import ConversionalModal from './Convertional/ConversionalModal';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PopulationModel from './Populations/Population';
+import  topElevationss from '../testDate';
 const containerStyle = {
   height: '90vh',
 };
@@ -31,7 +32,7 @@ const numPoints = 10;
 
 
 function EvationLocation() {
-  const {scanagain, setScanAgain,northeastp,setnortheast,setsouthwest,southwestp, apiKey, setlatgeo, latgeo, setlonggeo, longgeo, isLoaded, setLocationName, locationName, useDistace, setdistance, shatterbar, setshatterbar,scannedCoordinates, setScannedCoordinates, mute, setMute, globarpathloss, setglobarpathloss, globelthroughtput } = useInformation()
+  const {scanagain, setScanAgain,northeastp,setnortheast,setsouthwest, latgeo,  longgeo, isLoaded, setLocationName, locationName, useDistace, setdistance, shatterbar, setshatterbar,scannedCoordinates, setScannedCoordinates, mute, setMute, globarpathloss, setglobarpathloss, globelthroughtput } = useInformation()
   const [map, setMap] = useState(null);
   const [topElevations, setTopElevations] = useState([]);
 
@@ -269,8 +270,6 @@ const southwest = {
   };
 
   const HandleShowModel = (item)=>{
-    // setCheckOrdinate(item)
-    console.log(item)
     setmodelcovalue(item)
     props.setOpenModal('initial-focus')
   }
@@ -373,28 +372,28 @@ showSuitable && (
 
 
       {
-        topElevations.length > 0 ? (      <div>
-<button disabled={mutesb} style={{padding:10, backgroundColor:'blue', color:'white',}} className='mx-2 my-4' onClick={()=> {HandleScanSuitableHeight();   toast.success('Scanning for Suitable Site', {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-      });}}>Scan for Suitable Site</button>
- 
-<button style={{padding:10, backgroundColor:'red', color:'white',}} className='mx-2 my-4' onClick={()=>  {setScanAgain(pre => !pre); localStorage.removeItem("suitableHeight");  toast.success('Previous Suitable Site has been clear', {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-      });}}>Clear seleted Site</button>
+        topElevationss.length > 0 ? (      <div>
+          <button disabled={mutesb} style={{padding:10, backgroundColor:'blue', color:'white',}} className='mx-2 my-4' onClick={()=> {HandleScanSuitableHeight();   toast.success('Scanning for Suitable Site', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            });}}>Scan for Suitable Site</button>
+       
+      <button style={{padding:10, backgroundColor:'red', color:'white',}} className='mx-2 my-4' onClick={()=>  {setScanAgain(pre => !pre); localStorage.removeItem("suitableHeight");  toast.success('Previous Suitable Site has been clear', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            });}}>Clear seleted Site</button>
 
       <Table striped>
       <Table.Head>
@@ -410,17 +409,18 @@ Latitude Value
         <Table.HeadCell>
 Elevation Value
         </Table.HeadCell>
-        <Table.HeadCell> Order </Table.HeadCell>
+        <Table.HeadCell> Result </Table.HeadCell>
         <Table.HeadCell>Result</Table.HeadCell>
         <Table.HeadCell>Result</Table.HeadCell>
-        <Table.HeadCell>Result</Table.HeadCell>
+
+        <Table.HeadCell>Order</Table.HeadCell>
       </Table.Head>
       <Table.Body className="divide-y">
 
 
       { 
 
-        topElevations?.map((item, index) => {
+        topElevationss?.map((item, index) => {
    
     const { elevation} = item
     const {lat, lng } = item?.coordinate
@@ -434,6 +434,7 @@ Elevation Value
           <Table.Cell>      <Button onClick={()=>{ calculatePathLoss(); HandleShowModel(item, locationName, modealInfo)}}>Empirical model</Button></Table.Cell>
           <Table.Cell>      <Models  item={item} /></Table.Cell>
           <Table.Cell>   <ConversionalModal  /> </Table.Cell>
+     
           <Table.Cell>
           
             <Button onClick={()=> HandleSave(item)}>       <p>

@@ -6,6 +6,8 @@ import ModifiedHataModelITV from './ModifiedHataModelITV';
 import ModifiedFreeSpace from './ModifiedFreeSpace';
 import EgliModelITV from './EgliModelITV';
 import './style.css'
+import HataStv from './HataStv';
+import EgliStv from './EgliStv';
 
 const FormElements = ({ modelcovalue, locationName, props }) => {
 
@@ -51,6 +53,12 @@ const FormElements = ({ modelcovalue, locationName, props }) => {
                             <div onClick={() => handleButtonClick('Egli Model ITV')} className="w-full">
                                 <Button>Egli Model ITV</Button>
                             </div>
+                            <div onClick={() => handleButtonClick('Hata Model STV')} className="w-full">
+                                <Button>Modified Hata Model for STV</Button>
+                            </div>
+                            <div onClick={() => handleButtonClick('Egli Model STV')} className="w-full">
+                                <Button>Egli Model for STV</Button>
+                            </div>
                         </div>
 
                         <div style={{  borderLeftWidth:10, borderLeftColor:'black', padding:"10px"}}>
@@ -59,6 +67,8 @@ const FormElements = ({ modelcovalue, locationName, props }) => {
                             {selectedButton === 'Modified Hata Model ITV' && <ModifiedHataModelITV  />}
                             {selectedButton === 'Egli Model EBS' && <EgliModelEBS   /> }
                             {selectedButton === 'Egli Model ITV' && <EgliModelITV />}
+                            {selectedButton === 'Hata Model STV' && <HataStv />}
+                            {selectedButton === 'Egli Model STV' && <EgliStv />}
                         </div>
                         </div>
                     </div>

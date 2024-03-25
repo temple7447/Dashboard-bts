@@ -13,7 +13,7 @@ export function useInformation() {
 // Create a UserProvider component to wrap your app
 export function UserProvider({ children }) {
   const [userName, setUserName] = useState('John Doe');
-  const  apiKey = "AIzaSyDVBRpXp9XL78sy4Ct5aBvHENRKpX7eMfw"
+  const  apiKey = "AIzaSyDx_Oy-ib5VdFDDF1jAHM8OYFoqK9GjLGY"
   const [latgeo, setlatgeo] = useState('')
   const [longgeo, setlonggeo] = useState('')
   const [locationName, setLocationName] = useState('');
