@@ -262,9 +262,11 @@ const  handleScannedCoordinates = ()=>{
 <div style={{textAlign:'center'}}>Empirical Model</div>
 <div>
   <div>Modified Free Space</div>
-  <div>Modified Hata Model ITV</div>
-  <div>Egli Model EBS</div>
-  <div>Egli Model ITV</div>
+  <div>Modified Hata Model for ITV</div>
+  <div>Egli Model for EBS</div>
+  <div>Egli Model for ITV</div>
+  <div>Modified Hata Model for STV</div>
+  <div>Egli Model for STV</div>
 </div>
 </div>
 
