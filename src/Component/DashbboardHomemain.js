@@ -259,7 +259,7 @@ const  handleScannedCoordinates = ()=>{
   <div>Bandwidth Required : <span className="highlight">0.15</span></div>
 </div>
 <div className='p-3 ' style={{backgroundColor:'white', borderRadius:5,width:300 }}>
-<div style={{textAlign:'center'}}>Empirical Model</div>
+<div style={{textAlign:'center'}}>Empirical Models</div>
 <div>
   <div>Modified Free Space</div>
   <div>Modified Hata Model for ITV</div>
