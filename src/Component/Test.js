@@ -6,7 +6,7 @@ const apiKey = 'AIzaSyBRh1v_PR9tj_gDhALkJdbbm4-70ODDCr8'; // Replace with your A
 const Test = () => {
   const location = { lat: 7.0968645, lng: 6.304773400000001 }; // Replace with your desired coordinates
 
-  const handleReverseGeocoding = (latLng) => {
+  const handleReverseGeocoding = latLng => {
     const geocoder = new window.google.maps.Geocoder();
     geocoder.geocode({ location: latLng }, (results, status) => {
       if (status === 'OK') {

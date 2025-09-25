@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Textinput from './Textinput';
-import { useInformation } from '../../Provider';
+import { useInformation } from '../../hooks/useInformation';
 
 
 const Utilityfunction = () => {

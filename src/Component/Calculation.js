@@ -37,7 +37,7 @@ function HataPathLossCalculator() {
           <input
             type="text"
             value={frequency}
-            onChange={(e) => setFrequency(e.target.value)}
+            onChange={e => setFrequency(e.target.value)}
           />
         </div>
         <div>
@@ -45,7 +45,7 @@ function HataPathLossCalculator() {
           <input
             type="text"
             value={baseStationHeight}
-            onChange={(e) => setBaseStationHeight(e.target.value)}
+            onChange={e => setBaseStationHeight(e.target.value)}
           />
         </div>
         <div>
@@ -53,7 +53,7 @@ function HataPathLossCalculator() {
           <input
             type="text"
             value={mobileAntennaHeight}
-            onChange={(e) => setMobileAntennaHeight(e.target.value)}
+            onChange={e => setMobileAntennaHeight(e.target.value)}
           />
         </div>
         <div>
@@ -61,7 +61,7 @@ function HataPathLossCalculator() {
           <input
             type="text"
             value={distance}
-            onChange={(e) => setDistance(e.target.value)}
+            onChange={e => setDistance(e.target.value)}
           />
         </div>
         <button type="button" onClick={calculateHataPathLoss}>

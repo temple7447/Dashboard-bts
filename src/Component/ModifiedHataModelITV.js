@@ -1,35 +1,37 @@
 import React, { useState, useContext, useEffect } from 'react';
 import './stylyinghata.css'; // Import your CSS file
-import { useInformation } from '../Provider';
+import { useInformation } from '../hooks/useInformation';
 import { Alert } from 'flowbite-react';
 const ModifiedHataModelITV = () => {
-
-
-  const {useDistace, setdistance, globarpathloss, setglobarpathloss,setglobelthroughtput, globelthroughtput, mute, setMute } = useInformation() 
+  const {
+    useDistace,
+    setdistance,
+    globarpathloss,
+    setglobarpathloss,
+    setglobelthroughtput,
+    globelthroughtput,
+    mute,
+    setMute,
+  } = useInformation();
 
   const [distance, setDistance] = useState('');
   const [result, setResult] = useState(null);
-const [alertme, setalertme] = useState(false)
-const [alertmesuc, setalertmesuc] = useState(false)
+  const [alertme, setalertme] = useState(false);
+  const [alertmesuc, setalertmesuc] = useState(false);
 
-
-  const HandleUsed  = ()=>{
-    if(distance.length > 0) {
+  const HandleUsed = () => {
+    if (distance.length > 0) {
       const dKm = parseFloat(distance);
       // useDistace, setDistance
-      setdistance(dKm)
-      setalertmesuc(true)
-     
-    }else{
-      setalertme(true)
-
+      setdistance(dKm);
+      setalertmesuc(true);
+    } else {
+      setalertme(true);
     }
-  
-  }
+  };
 
   const handles = () => setalertmesuc(false);
   const handlew = () => setalertme(false);
-
 
   const calculateHataPathLoss = () => {
     const log10 = Math.log10;
@@ -49,8 +51,8 @@ const [alertmesuc, setalertmesuc] = useState(false)
         (44.9 - 6.55 * log10(ht)) * log10(dKm);
 
       setResult(pathLoss);
-      setglobarpathloss(pathLoss)
-      setMute(false)
+      setglobarpathloss(pathLoss);
+      setMute(false);
     } else {
       setResult('Please enter valid input for all fields.');
     }
@@ -58,56 +60,59 @@ const [alertmesuc, setalertmesuc] = useState(false)
 
   return (
     <div className="hata-container">
-      {alertme  && (
-        <Alert
-         color="warning"
-         onDismiss={handlew}
-         >
+      {alertme && (
+        <Alert color="warning" onDismiss={handlew}>
           <span>
             <p>
               <span className="font-medium">Warning alert!</span>
-            The distance field can not  be empty
+              The distance field can not be empty
             </p>
           </span>
         </Alert>
       )}
-      {alertmesuc  && (
-        <Alert
-     color="success"
-     onDismiss={handles}
-         >
+      {alertmesuc && (
+        <Alert color="success" onDismiss={handles}>
           <span>
             <p>
               <span className="font-medium">Success alert!</span>
-            The distance on map has be change to this value {useDistace}m
+              The distance on map has be change to this value {useDistace}m
             </p>
           </span>
         </Alert>
       )}
       <h1>Hata Path Loss Calculator</h1>
-     <div className="info-text">Transmitter Height = 3048m, Receiver Height = 1.5 and Frequecy = 479.25Mhz;</div>
+      <div className="info-text">
+        Transmitter Height = 3048m, Receiver Height = 1.5 and Frequecy =
+        479.25Mhz;
+      </div>
       <form className="form-container">
         <div className="form-group">
           <label>Link Distance (km):</label>
           <input
-           type="number"
+            type="number"
             value={distance}
-            onChange={(e) => setDistance(e.target.value)}
+            onChange={e => setDistance(e.target.value)}
           />
         </div>
-        <button className="calculate-button my-4" type="button" onClick={calculateHataPathLoss}>
+        <button
+          className="calculate-button my-4"
+          type="button"
+          onClick={calculateHataPathLoss}
+        >
           Calculate
         </button>
-        <div onClick={HandleUsed} style={{backgroundColor:'blue', padding:10, borderRadius:5, }}>Use of distance</div>
+        <div
+          onClick={HandleUsed}
+          style={{ backgroundColor: 'blue', padding: 10, borderRadius: 5 }}
+        >
+          Use of distance
+        </div>
       </form>
-      <div className='' style={{display:'flex'}}>
-      {result !== null &&  <div className="result">PL_Hata(dB): {result}</div>}
-
+      <div className="" style={{ display: 'flex' }}>
+        {result !== null && <div className="result">PL_Hata(dB): {result}</div>}
       </div>
     </div>
   );
 };
 
 export default ModifiedHataModelITV;
-
-

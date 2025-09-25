@@ -3,7 +3,7 @@ import Textinput from './Textinput';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useInformation } from '../../Provider';
+import { useInformation } from '../../hooks/useInformation';
 
 const Throughput = () => {
 

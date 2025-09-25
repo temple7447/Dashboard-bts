@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Alert } from 'flowbite-react';
-import { useInformation } from '../../Provider';
+import { useInformation } from '../../hooks/useInformation';
 const HataModel = () => {
 
 

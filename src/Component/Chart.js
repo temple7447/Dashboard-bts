@@ -9,23 +9,17 @@ const BarChart = () => {
     { label: 'Label 4', value: 5 },
     { label: 'Label 5', value: 2 },
   ];
-  
+
   return (
-    <div style={{ width: '50%', alignSelf:'flex-start', }}>
-      <VictoryChart
-        theme={VictoryTheme.material}
-        domainPadding={20}
-      >
+    <div style={{ width: '50%', alignSelf: 'flex-start' }}>
+      <VictoryChart theme={VictoryTheme.material} domainPadding={20}>
         <VictoryAxis
           tickValues={data.map(d => d.label)}
           style={{
             tickLabels: { fontSize: 10, padding: 5 },
           }}
         />
-        <VictoryAxis
-          dependentAxis
-          tickFormat={(x) => (`${x}`)}
-        />
+        <VictoryAxis dependentAxis tickFormat={x => `${x}`} />
         <VictoryBar
           data={data}
           x="label"

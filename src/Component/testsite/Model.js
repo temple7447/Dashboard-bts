@@ -6,7 +6,7 @@ import { useState } from 'react';
 import WeightUtility from './WeightUtility';
 import Throughput from './Throughput';
 import Utilityfunction from './Utilityfunction';
-import { useInformation } from '../../Provider';
+import { useInformation } from '../../hooks/useInformation';
 
 function Models({item}) {
 

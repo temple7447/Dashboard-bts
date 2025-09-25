@@ -15,8 +15,8 @@ const BuildingNumberFinder = () => {
         if (results[0]) {
           // Parse the address components to find the building number
           const addressComponents = results[0].address_components;
-          const buildingNumberComponent = addressComponents.find(
-            (component) => component.types.includes('street_number')
+          const buildingNumberComponent = addressComponents.find(component =>
+            component.types.includes('street_number')
           );
 
           if (buildingNumberComponent) {
@@ -42,7 +42,7 @@ const BuildingNumberFinder = () => {
         <input
           type="number"
           value={latitude}
-          onChange={(e) => setLatitude(parseFloat(e.target.value))}
+          onChange={e => setLatitude(parseFloat(e.target.value))}
         />
       </div>
       <div>
@@ -50,7 +50,7 @@ const BuildingNumberFinder = () => {
         <input
           type="number"
           value={longitude}
-          onChange={(e) => setLongitude(parseFloat(e.target.value))}
+          onChange={e => setLongitude(parseFloat(e.target.value))}
         />
       </div>
       <button onClick={handleFindBuildingNumber}>Find Building Number</button>
