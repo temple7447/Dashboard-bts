@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 
-const apiKey = 'AIzaSyAwjwRWC6rksF7GnJVyx6-b_hspjvWuI3Y'; // Replace with your API key
+const apiKey = 'AIzaSyBRh1v_PR9tj_gDhALkJdbbm4-70ODDCr8'; // Replace with your API key
 
 const Test = () => {
   const location = { lat: 7.0968645, lng: 6.304773400000001 }; // Replace with your desired coordinates
